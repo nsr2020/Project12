@@ -1,0 +1,12 @@
+
+.back img{
+    position: var(--nsr-position);
+    top:var(--nsr-top);
+    left: var(--nsr-left);
+    cursor: var(--nsr-cursor1);
+    transition: var(--nsr-transition);
+    width: 70px;
+}
+.back img:hover{
+    transform: scale(1.2);
+}

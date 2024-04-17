@@ -1,0 +1,34 @@
+.board {
+	background-color: var(--nsr-color1);
+	width: fit-content;
+	text-align: center;
+	transition: var(--nsr-transition);
+}
+
+.board h1 {
+	margin-bottom: var(--nsr-margin1);
+    user-select: var(--nsr-user-select);
+	transition: var(--nsr-transition);
+}
+.color-dark{
+  background-color: var(--nsr-color1);
+  color: var(--nsr-color2);
+}
+.color-light{
+  background-color:var(--nsr-color2);
+  color: var(--nsr-color1);
+}
+.board button {
+	padding: 8px 12px;
+	margin: var(--nsr-margin2);
+	border: 5px groove #eee;
+	width: 100px;
+	border-radius: var(--nsr-br2);
+	font-weight: var( --nsr-fweight);
+	cursor: var(--nsr-cursor1);
+    transition: var(--nsr-transition);
+}
+
+.board button:hover {
+	transform: scale(1.1)
+}

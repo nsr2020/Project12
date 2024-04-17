@@ -1,0 +1,29 @@
+.board-bingo .game-bingo{
+    display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: var(--nsr-gap2);
+	transition: var(--nsr-transition);
+    margin-bottom: 20px;
+    border: 3px groove ;
+    padding: var(--nsr-padding1);
+    border-radius: var(--nsr-br2);
+}
+.number-wrp{
+    display: flex;
+    justify-content: center;
+    margin: 15px auto;
+    width: fit-content;
+  
+}
+.number-wrp img{
+    width: 50px;
+    cursor: var(--nsr-cursor1);
+    user-select: var(--nsr-user-select);
+}
+
+.changeGrey {
+    filter: grayscale(100%);
+    transform: scale(0.6) ;
+  }
+
+ 

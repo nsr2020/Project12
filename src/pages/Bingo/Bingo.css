@@ -1,0 +1,4 @@
+.bingo-container{
+    flex-direction: column; 
+    transition: var(--nsr-transition);
+}

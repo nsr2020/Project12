@@ -1,0 +1,20 @@
+.divBallSung {
+    width: 120px;
+    padding: var(--nsr-padding2);
+    border-radius: 20%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ff7f7f, 0 0 30px #ff7f7f, 0 0 40px #ff7f7f, 0 0 70px #ff7f7f, inset 0 0 40px #ff7f7f;
+    animation: neon-glow 1s infinite alternate;
+  }
+
+  .divBallSung img {
+    width: 80px;
+  }
+
+  @keyframes neon-glow {
+    from {
+      box-shadow: 0 0 10px #fff, 0 0 20px #ff7f7f, 0 0 30px #ff7f7f, 0 0 40px #ff7f7f, 0 0 70px #ff7f7f, inset 0 0 40px #ff7f7f;
+    }
+    to {
+      box-shadow: 0 0 20px #fff, 0 0 30px #ff7f7f, 0 0 40px #ff7f7f, 0 0 50px #ff7f7f, 0 0 80px #ff7f7f, inset 0 0 50px #ff7f7f;
+    }
+  }

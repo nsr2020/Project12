@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+:root{
+  /*Colores*/
+  --nsr-color1:#222;
+  --nsr-color2: rgb(181, 231, 168);
+  --nsr-color3:  #f5f2ed;
+  --nsr-color4:  rgb(224, 66, 153);
+  --nsr-color5:#ffff;
+  --nsr-color6:#0c080cd3;
+  --nsr-color7:yellow;
+  --nsr-color8:#09f;
+  
+  /*transition*/
+  --nsr-transition: all 0.5s; 
+
+  /*margins*/
+  --nsr-margin1:10px;
+  --nsr-margin2:20px;
+  --nsr-margin3:25px;
+  --nsr-margin4:30px;
+  --nsr-margin5:40px;
+
+  /*user-select*/
+  --nsr-user-select: none;
+  /*bgImage*/
+  --nsr-bgImage1: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+  --nsr-bgImage2: url("https://www.transparenttextures.com/patterns/gravel.png");
+
+  /*BColor*/
+  --nsr-bColor1:transparent;
+
+  /*BorderRadius*/
+  --nsr-br1:5px;
+  --nsr-br2:10px;
+  --nsr-br3:15px;
+  --nsr-br4:20px;
+  --nsr-br5:25px;
+  /*Padding*/
+  --nsr-padding1:10px 20px;
+  --nsr-padding2:20px;
+  --nsr-padding3:30px;
+  --nsr-padding4:40px;
+  --nsr-padding5:50px;
+  /*Gap*/
+  --nsr-gap1:10px;
+  --nsr-gap2:20px;
+  --nsr-gap3:30px;
+  --nsr-gap4:40px;
+  --nsr-gap5:50px;
+  --nsr-gap6:100px;
+
+  /*FontWeight*/
+  --nsr-fweight:bolder;
+
+  /*Cursors*/
+  --nsr-cursor1:pointer;
+
+  /*top*/
+  --nsr-top:20px;
+  /*Left*/
+  --nsr-left:40px;
+  /*Right*/
+  --nsr-right:40px;
+  /*Position*/
+  --nsr-position:absolute;
+  --nsr-positon2:relative;
+
+}
+
+
+
+.flex-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

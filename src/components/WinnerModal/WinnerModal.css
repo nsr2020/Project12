@@ -1,0 +1,32 @@
+/*clase de Swal alerta de sweetalert*/
+.custom-modal-class{
+	width: 280px;
+	height: auto;
+	background-color:var( --nsr-color3);
+    background-image:var(  --nsr-bgImage1);
+
+	
+}
+.custom-modal-class h2{
+	color: var(--nsr-color4);
+	text-decoration:underline;
+	
+}
+.custom-modal-class div:where(.swal2-container) .swal2-html-container {
+	font-weight: var(--nsr-fweight);
+}
+.custom-modal-class button{
+	background-color:var(--nsr-color4);
+    color: var( --nsr-color5);
+    border: var(--nsr-user-select);
+    border-radius: var( --nsr-br1);
+    padding: var(--nsr-padding1);
+    font-weight: var(--nsr-fweight);
+	transition: var(--nsr-transition);
+}
+.custom-modal-class button:hover{
+	transform: scale(0.8);
+}
+.transparent-image{
+	background-color: var(--nsr-bColor1);
+}

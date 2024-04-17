@@ -1,0 +1,26 @@
+.board-bingo{
+    flex-direction: column;
+    transition: var(--nsr-transition);
+    padding-bottom: var(--nsr-padding2);
+}
+.board-bingo h1{
+    transition: var(--nsr-transition);
+}
+.div-btns{
+    display: flex;
+    justify-content: center;
+    margin: 15px auto;
+    width: fit-content;
+    position: relative;
+    transition: var(--nsr-transition);
+}
+.div-btns button{
+    border: var(--nsr-user-select);
+    padding: var(--nsr-padding1);
+    font-size: x-large;
+    cursor: var(--nsr-cursor1);
+    transition: var(--nsr-transition);
+}
+.div-btns button:hover{
+    transform: scale(1.2);
+}

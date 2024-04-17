@@ -1,0 +1,23 @@
+.board .game {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--nsr-gap1);
+	transition: var(--nsr-transition);
+}
+
+.turn {
+	display: flex;
+	justify-content: center;
+	margin: 15px auto;
+	width: fit-content;
+	position: var( --nsr-positon2);
+	border-radius: var(--nsr-br2);
+}
+
+.turn .square,
+.winner .square {
+	width: 70px;
+	height: 70px;
+	pointer-events: var( --nsr-user-select);
+	border-color: var(--nsr-bColor1);
+}

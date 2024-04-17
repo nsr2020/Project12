@@ -1,0 +1,14 @@
+.theme-button{
+    position: var(--nsr-position);
+    top: var(--nsr-top);
+    right:var(--nsr-right) ;
+    background-color: var( --nsr-bColor1);
+    cursor: var(--nsr-cursor1);
+    font-size: xx-large;
+    border:var(--nsr-user-select);
+    transition:var(--nsr-transition);
+    width: 60px;
+}
+.theme-button:hover{
+    transform: scale(1.2);
+}
