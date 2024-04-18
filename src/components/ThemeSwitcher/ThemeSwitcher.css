@@ -12,3 +12,19 @@
 .theme-button:hover{
     transform: scale(1.2);
 }
+
+@media(max-width:600px){
+    .theme-button{
+        right: 5px;
+    }
+    .theme-button:hover{
+        transform: scale(1.1);
+    }
+    }
+
+@media(max-width:456px){
+    .theme-button{
+        width: 40px;
+        right: 10px;
+    }
+}

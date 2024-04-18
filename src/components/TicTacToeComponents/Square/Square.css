@@ -17,4 +17,11 @@
 	color:var( --nsr-color5);
 	background: var(--nsr-color8);
 }
+@media(max-width:484px){
+	.square{
+		width: 75px;
+        height: 75px;
+	}
+
+}
 

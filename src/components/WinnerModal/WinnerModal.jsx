@@ -42,6 +42,7 @@ const WinnerModal = ({ winner, dispatch, game, show }) => {
     })
   : null
 }
+
 		</>
           
 	);

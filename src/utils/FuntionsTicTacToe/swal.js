@@ -19,7 +19,8 @@ export const checkSwal = ({ title, text, imgUrl }, dispatch) => {
     }).then(() => {
         if(dispatch){
             resetGame(dispatch);
+            confetti()
         }
-        confetti()
+        
     });
 };

@@ -21,3 +21,7 @@
 	pointer-events: var( --nsr-user-select);
 	border-color: var(--nsr-bColor1);
 }
+
+@media(max-width:484px){
+
+}

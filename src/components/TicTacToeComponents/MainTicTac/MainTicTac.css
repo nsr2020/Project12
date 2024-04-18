@@ -32,3 +32,17 @@
 .board button:hover {
 	transform: scale(1.1)
 }
+@media(max-width:484px){
+	.board{
+		padding-bottom: -35px;
+	}
+	.board h1 {
+		
+		font-size: 20px;
+		
+	}
+	.board button {
+        padding: 4px 6px;
+		font-size: 12px;
+    }
+}

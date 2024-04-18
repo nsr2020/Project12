@@ -16,6 +16,7 @@
     padding: var( --nsr-padding5);
     box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
     border-radius: var( --nsr-br4);
+  
     
 } 
  .bingo,.tictac{
@@ -30,6 +31,38 @@
 .bingo:hover,.tictac:hover{
     transform: scale(1.2);
 } 
+
+
+
+/*Media Queries*/
+@media(max-width:610px){
+   .startpage h1{
+        font-size: 70px;
+    }
+}
+@media(max-width:438px){
+  .startpage h1{
+       font-size: 60px;
+   }
+   .imgwrp{
+    gap: var(--nsr-gap5);
+    padding: var( --nsr-padding4); 
+} 
+
+}
+@media (max-width:381px){
+  .startpage h1{
+    font-size: 42px;
+  }
+   .imgwrp{
+    gap: var(--nsr-gap3);
+    padding: var( --nsr-padding3);
+   
+   }
+}
+ 
+
+
  
 
 /*Animaciones para h1 y las iconos*/

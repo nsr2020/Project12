@@ -10,3 +10,18 @@
 .back img:hover{
     transform: scale(1.2);
 }
+@media(max-width:600px){
+.back img{
+    left: 5px;
+}
+.back img:hover{
+    transform: scale(1.1);
+}
+}
+
+@media(max-width:456px){
+    .back img{
+        width: 40px;
+        left: 10px;
+    }
+}

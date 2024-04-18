@@ -24,3 +24,19 @@
 .div-btns button:hover{
     transform: scale(1.2);
 }
+@media(max-width:600px){
+    .board-bingo{
+        margin-top: -60px;
+    }
+    .board-bingo h1{
+       font-size: 20px;
+    }
+    .div-btns button{
+        font-size: large;
+        margin: -10px;
+    }
+    .div-btns button:hover{
+        transform: scale(0.8);
+    }
+}
+
