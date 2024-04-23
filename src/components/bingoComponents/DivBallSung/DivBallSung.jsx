@@ -2,6 +2,7 @@ import bingoNumbers from "../../../utils/DataBingo/dataBingo";
 import "./DivBallSung.css"
 
 const DivBallSung = ({index}) => {
+  console.log(index);
     const isValidIndex = index !== null && index >= 0 && index < bingoNumbers.length;
     return (
         <div className={`divBallSung flex-container `}>

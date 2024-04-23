@@ -18,6 +18,7 @@ export const tictactoeReducer = (state,action) =>{
                ...state,
                 turn: action.turn
             }
+            
         case 'UPDATE_WINNER':
             return {
                ...state,

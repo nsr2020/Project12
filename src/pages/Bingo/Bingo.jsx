@@ -8,12 +8,21 @@ import { bingoReducer, INITIAL_STATE } from '../../reducer/Bingo/bingo.reducer';
 
 const Bingo = () => {
   const [state, dispatch]=useReducer(bingoReducer,INITIAL_STATE)
-  const {}=state;
+
+  const {bingoNumbersCardBoard,displayedNumberIndex,
+    intervalId,showWinnerModal,buttonsState,gameStopped,
+    calledNumbers,lineSung,lineWins, synthesis, selectedBingoNumbers}=state;
+
   const { theme } = useContext(ThemeContext);
+
   return (
     <div className={`App color-${theme} flex-container bingo-container animated slideInLeft`}>
      <ThemeSwitcher/> 
-      <MainBingo theme={theme}/>
+      <MainBingo theme={theme} dispatch={dispatch}  bingoNumbersCardBoard={bingoNumbersCardBoard} 
+      displayedNumberIndex={displayedNumberIndex} intervalId={intervalId} showWinnerModal={showWinnerModal}
+      buttonsState={buttonsState} gameStopped={gameStopped} 
+      calledNumbers={calledNumbers} lineSung={lineSung} lineWins={lineWins} synthesis={synthesis} 
+      selectedBingoNumbers={selectedBingoNumbers}/>
      <GoBack to={'/'}/>  
     </div>
   );

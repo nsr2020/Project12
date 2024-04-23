@@ -1,16 +1,16 @@
 import bingoNumbers from "../../utils/DataBingo/dataBingo";
-import { checkBingoWinner, checkLineWinner } from "./bingo.action";
 
 export const INITIAL_STATE = {
     bingoNumbersCardBoard:[],
-    selectedNumbers:[],
-    displayedNumbersIndex:null,
+  /*   selectedNumbers:[], */
+    displayedNumberIndex:null,
+
     intervalId:null,
     isPaused:false,
     synthesis:null,
-    selectedBingoNumbers:[],
+    selectedBingoNumbers:[...bingoNumbers],
     showWinnerModal:"",
-    bingoCalled:false,
+  /*   bingoCalled:false, */
     buttonsState:{
         play: true,
         pause: false,
@@ -19,100 +19,127 @@ export const INITIAL_STATE = {
         newNumbers: true,
     },
     gameStopped:false,
-    calledNumber:null,
+/*     calledNumber:null, */
     calledNumbers:[],
     lineSung:false,
     lineWins:[0, 0, 0],
 }
 
-export const bingoReducer = (state, action) => {
+export const bingoReducer = (state = INITIAL_STATE, action={}) => {
     switch(action.type) {
         case "STOP":
+            clearInterval(state.intervalId);
+            const {gameStopped} = action.payload;
             return {
-                ...state,
-                gameStopped: true,
-                isPaused: false,
-                buttonsState: {
-                    play: true,
-                    pause: false,
-                    resume: false,
-                    stop: false,
-                    newNumbers: true,
-                },
-                displayedNumbersIndex: null,
-                intervalId: null,
+                ...INITIAL_STATE,
+                gameStopped: gameStopped,
+         
             };
-        case "PAUSE":
+            case "PAUSE":
+            const { isPaused, buttonsState } = action.payload;
+            clearInterval(state.intervalId);
             return {
                 ...state,
-                isPaused: true,
+                isPaused: isPaused,
                 buttonsState: {
-                    play: false,
-                    pause: true,
-                    resume: false,
-                    stop: false,
-                    newNumbers: true,
+                    play: buttonsState.play,
+                    pause: buttonsState.pause,
+                    resume: buttonsState.resume,
+                    stop: buttonsState.stop,
+                    newNumbers: buttonsState.newNumbers,
                 },
             };
         case "RESUME":
+            const { buttonsState2, intervalId2, isPaused2, gameStopped2 } = action.payload;
             return {
                 ...state,
-                gameStopped: false,
-                isPaused: false,
                 buttonsState: {
-                    play: false,
-                    pause: true,
-                    resume: false,
-                    stop: false,
-                    newNumbers: false,
+                    play: buttonsState2.play,
+                    pause: buttonsState2.pause,
+                    resume: buttonsState2.resume,
+                    stop: buttonsState2.stop,
+                    newNumbers: buttonsState2.newNumbers,
                 },
+                intervalId: intervalId2,
+                isPaused: isPaused2,
+                gameStopped: gameStopped2,
             };
         case "PLAY":
-            const id = setInterval(() => {
-                const selectedNumbers = getRandomNumbers();
-                const newBingoCardBoard = selectedNumbers.map((number) => ({
-                    id: number,
-                    img: bingoNumbers[number - 1].img,
-                    selectedCardBoardBall: false,
-                }));
-                setBingoNumbersCardBoard(newBingoCardBoard);
-            }, 2500);
+            const { gameStopped1, showWinnerModal1, buttonsState1, updatedSelectedBingoNumbers } = action.payload;
             return {
                 ...state,
-                intervalId: id,
-                gameStopped: false,
-                showWinnerModal: "",
+                gameStopped: gameStopped1,
+                showWinnerModal: showWinnerModal1,
                 buttonsState: {
-                    play: false,
-                    pause: true,
-                    resume: false,
-                    stop: true,
-                    newNumbers: false,
+                    play: buttonsState1.play,
+                    pause: buttonsState1.pause,
+                    resume: buttonsState1.resume,
+                    stop: buttonsState1.stop,
+                    newNumbers: buttonsState1.newNumbers,
                 },
+                selectedBingoNumbers: updatedSelectedBingoNumbers
             };
-        case "INITIALIZE_BOARD":
-            initializeBingoCardBoard(setBingoNumbersCardBoard);
+        case "NEW_NUMBERS":
+            const {newBingoCardBoard2} = action.payload;
             return {
                 ...state,
-                // Aquí puedes actualizar otras propiedades del estado si es necesario
+                bingoNumbersCardBoard: newBingoCardBoard2,
             };
+       
             case "TOGGLE_NUMBER_SELECTION":
-                const { number, index } = action.payload;
-                const updatedBingoNumbersCardBoard = state.bingoNumbersCardBoard.map((bingoNumber) => {
-                    if (bingoNumber.id === number) {
-                        return {
-                            ...bingoNumber,
-                            selectedCardBoardBall: true
-                        };
-                    }
-                    return bingoNumber;
-                });
-                checkLineWinner(index, state.lineSung, state.setLineWins);
-                checkBingoWinner(updatedBingoNumbersCardBoard, state.setGameStopped, state.setShowWinnerModal);
+                const {updatedBingoNumbersCardBoard2}= action.payload;
                 return {
                     ...state,
-                    bingoNumbersCardBoard: updatedBingoNumbersCardBoard
+                    bingoNumbersCardBoard:updatedBingoNumbersCardBoard2,
+                    
                 };
+                
+              
+      
+        case "LINE_WINNER":
+            const { showWinnerModal3, gameStopped3, lineSung, lineWins } = action.payload;
+            return {
+                ...state,
+                showWinnerModal: showWinnerModal3,
+                gameStopped: gameStopped3,
+                lineSung: lineSung,
+                lineWins: lineWins,
+            };
+
+            case "BINGO_WINNER":
+                const {gameStopped4, showWinnerModal4} = action.payload;
+                return{
+                    ...INITIAL_STATE,
+                    gameStopped:gameStopped4,
+                    showWinnerModal:showWinnerModal4,
+                }
+
+        case "UPDATE_DISPLAYED_NUMBER_INDEX":
+            const { selectedNumber, updatedBingoNumbersCardBoard, allNumbersSelected, newIntervalId } = action.payload;
+            if (allNumbersSelected) {
+                clearInterval(state.intervalId);
+            }
+         
+            return {
+                ...state,
+                calledNumber: selectedNumber.id,
+                bingoNumbersCardBoard: updatedBingoNumbersCardBoard,
+                showWinnerModal: allNumbersSelected ? "bingo" : "",
+                intervalId: allNumbersSelected ? null : newIntervalId,
+                calledNumbers: allNumbersSelected ? state.calledNumbers : [...state.calledNumbers, selectedNumber.id],
+                displayedNumberIndex: selectedNumber.id - 1
+            };
+        case "INITIALIZE_SYNTHESIS":
+            const { synthesis } = action.payload;
+            return {
+                ...state,
+                synthesis: synthesis,
+            };
+            case"UPDATE_LINE_WINS":
+            return {
+                ...state,
+                lineWins: action.lineWins,
+            };
         default:
             return state;
     }
