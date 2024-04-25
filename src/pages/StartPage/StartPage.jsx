@@ -27,10 +27,10 @@ const StartPage = () => {
    
         <img onClick={()=>{
           handleClick("ticTacToe")
-        }} className='tictac animated fadeInRight' src="/public/assets/tic-tac-toe.png" alt="" />
+        }} className='tictac animated fadeInRight' src="/assets/tic-tac-toe.png" alt="" />
         <img onClick={()=>{
           handleClick("bingo")
-        }}  className='bingo animated fadeInLeft' src="/public/assets/bingo.png" alt="" />
+        }}  className='bingo animated fadeInLeft' src="/assets/bingo.png" alt="" />
      
     </div>
  
