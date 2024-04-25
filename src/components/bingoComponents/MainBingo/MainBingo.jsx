@@ -4,29 +4,26 @@ import DivBallSung from "../DivBallSung/DivBallSung";
 import SectionBingo from "../SectionBingo/SectionBingo";
 import "./MainBingo.css";
 import WinnerModal from "../../WinnerModal/WinnerModal";
-import { checkSynthesis, handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
+import { handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
 
 
-const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex,intervalId,
-  showWinnerModal, buttonsState, gameStopped,calledNumbers, lineSung, lineWins, synthesis, selectedBingoNumbers }) => {
+const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex,
+  showWinnerModal, buttonsState, gameStopped,calledNumbers, calledNumber,lineSung, 
+  lineWins, synthesis, selectedBingoNumbers, sungNumbers, matchingNumbers }) => {
 
 
 
-  useEffect(() => {
+/*   useEffect(() => {
      
     return () => {
         clearInterval(intervalId);
     };
-}, [intervalId]);
+}, [intervalId]); */
 
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);
   }, []);
  
-/*   useEffect(() => {
-    checkLineWinner(dispatch)
-  }, [lineWins, lineSung]); */
-
 
 	return (
 		<main className={`color-${theme} flex-container board-bingo`}>
@@ -37,7 +34,7 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 					text="▶"
 					game="bingo"
 					onClick={()=>{
-						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers)
+						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers)
 					}}
 					title="Play"
 					disabled={!buttonsState.play}
@@ -57,7 +54,7 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 					text="🔁"
 					game="bingo"
 					onClick={()=>{
-                        handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers)
+                        handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers, matchingNumbers)
 					}}
 					title="Resume"
 					disabled={!buttonsState.resume}
@@ -86,12 +83,13 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 			<SectionBingo
 				theme={theme}
 				bingoNumbersCardBoard={bingoNumbersCardBoard}
-				
 				calledNumbers={calledNumbers}
+				calledNumber={calledNumber}
 				buttonsState={buttonsState}
 				lineSung={lineSung}
 				lineWins={lineWins}
 				dispatch={dispatch}
+				matchingNumbers={matchingNumbers}
 			/>
 		
 			<DivBallSung
