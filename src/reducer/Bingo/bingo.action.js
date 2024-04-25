@@ -5,9 +5,10 @@ import { sayNumber } from "../../utils/FuntionsBingo/sayNumber";
 
 
 export 	const handleStopClick = (dispatch) => {
-  dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
+ 
       const gameStopped = true;
       dispatch({ type: "STOP", payload: {gameStopped} });
+      dispatch({type:"CLEAN_INTERVAL"})
       handleNewCardGame(dispatch)
 }
 /*-------------------------------------------------------------------------------------------------------------------- */
@@ -62,6 +63,14 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
       console.log(updatedSelectedBingoNumbers.length);
       if (updatedSelectedBingoNumbers.length === 0 & sungNumbers.length >0) {
         dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
+        const buttonsState = {
+          play: false,
+          pause: false,
+          resume: false,
+          stop: true,
+          newNumbers: false,
+        }
+          dispatch({type: "PAUSE", payload:{ buttonsState}});
         /* setTimeout(()=>{
           alert("No has seleccionado todos los números a tiempo!!!!")
           const gameStopped = true;
@@ -76,9 +85,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
         // Devolver un nuevo estado  con la información actualizada
        
     } 
-}, 2500);
-
-   
+}, 2500); 
     const buttonsState2 ={
       play: false,
       pause: true,
@@ -97,9 +104,9 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
   //************************************************************************************************ */
   
-  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers) => {
+  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers) => {
 
-    clearInterval(window.intervalId);
+    dispatch({type:"CLEAN_INTERVAL"})
     let updatedSelectedBingoNumbers = [...bingoNumbers];
     let matchingNumbersCopy = []; // aqui vamos a meter los numeros que coinciden
     const newIntervalId = setInterval(() => {
@@ -147,8 +154,16 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
        // Verificar si todos los números han sido cantados
        const allNumbersSung = updatedSelectedBingoNumbers.every(number => number.selectedCardBoardBall);
         console.log(updatedSelectedBingoNumbers.length, allNumbersSung);
-       if (updatedSelectedBingoNumbers.length === 0 & sungNumbers.length >0) {
+       if (updatedSelectedBingoNumbers.length === 0 ) {
         dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
+        const buttonsState = {
+          play: false,
+          pause: false,
+          resume: false,
+          stop: true,
+          newNumbers: false,
+        }
+          dispatch({type: "PAUSE", payload:{ buttonsState}});
       /*   setTimeout(()=>{
           alert("No has seleccionado todos los números a tiempo!!!!")
           const gameStopped = true;
@@ -196,7 +211,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
 //-------------------------------------------------
 export const handlePauseClick = (dispatch) => {
-  dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
+  dispatch({type:"CLEAN_INTERVAL"})
   const buttonsState = {
     play: false,
     pause: false,
@@ -204,7 +219,7 @@ export const handlePauseClick = (dispatch) => {
     stop: true,
     newNumbers: false,
   }
-    dispatch({type: "PAUSE", payload:{isPaused:true, buttonsState}});
+    dispatch({type: "PAUSE", payload:{buttonsState}});
 };
 //----------------------------------------------------------------
 export 	const handleNewCardGame = (dispatch) => {
@@ -217,6 +232,7 @@ export 	const handleNewCardGame = (dispatch) => {
   }));
    dispatch({type: "NEW_NUMBERS" , payload:{newBingoCardBoard2}})
    checkSynthesis(dispatch)
+   dispatch({type: "CLEAN_INTERVAL"})
 };
 
 ////////////////////////////////////////////////////////////////
@@ -291,13 +307,27 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung) => {
     const uniqueSelectedNumbers = new Set(selectedNumbers);
     if (uniqueSelectedNumbers.size === 15) {
       handlePauseClick(dispatch)
-        const gameStopped4 = true;
-        const showWinnerModal4 = "bingo";
-        dispatch({type: 'BINGO_WINNER', payload:{gameStopped4,showWinnerModal4}})
+      dispatch({ type: 'RESUME', payload: { 
+        buttonsState2: {
+          play: true,
+          pause: false,
+          resume: false,
+          stop: false,
+          newNumbers: true,
+        },
+        intervalId2: null, // Asegúrate de pasar el valor correcto del intervalo si es necesario
+        isPaused2: false,
+        gameStopped2: false,
+      }});
+      /*   const gameStopped4 = true;
+        const showWinnerModal4 = "bingo"; */
+        dispatch({type: 'BINGO_WINNER', payload:{gameStopped4:true,showWinnerModal4:"bingo"}})
         confetti()
         setTimeout(()=>{
             handleStopClick(dispatch)
+            dispatch({type:"CLEAN_INTERVAL"})
         },500)
+        
   };
 }
 }

@@ -11,22 +11,24 @@ console.log(matchingNumbers.length);
      
       {bingoNumbersCardBoard.map((bingoNumber, index) => (
         <div 
-        className={`number-wrp ${
-          matchingNumbers.includes(bingoNumber.id) && bingoNumber.id === calledNumber ? 'changeGrey' : ''
-        }`}
           key={bingoNumber.id}
-          onClick={() => !play && (bingoNumber.id === calledNumber) && 
-            toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, bingoNumber.id)}
+          onClick={() => {
+            if (!play && bingoNumber.id === calledNumber) {
+              toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, bingoNumber.id);
+            }
+          }}
+          className={`number-wrp ${
+            bingoNumber.selectedCardBoardBall ? 'changeGrey' : '' && matchingNumbers.includes(bingoNumber.id)
+          }`}
             >
           <img 
-           
           src={bingoNumber.img} 
           alt={`Número ${bingoNumber.id}`} 
         />
         </div>
+        
       ))}
     </section>
   ); 
-
 }
 export default SectionBingo;

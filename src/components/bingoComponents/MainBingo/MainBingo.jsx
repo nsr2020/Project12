@@ -6,25 +6,14 @@ import "./MainBingo.css";
 import WinnerModal from "../../WinnerModal/WinnerModal";
 import { handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
 
-
 const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex,
   showWinnerModal, buttonsState, gameStopped,calledNumbers, calledNumber,lineSung, 
   lineWins, synthesis, selectedBingoNumbers, sungNumbers, matchingNumbers }) => {
-
-
-
-/*   useEffect(() => {
-     
-    return () => {
-        clearInterval(intervalId);
-    };
-}, [intervalId]); */
 
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);
   }, []);
  
-
 	return (
 		<main className={`color-${theme} flex-container board-bingo`}>
 			<h1 className={`color-${theme}`}>Bingo</h1>
@@ -96,7 +85,6 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 				index={displayedNumberIndex !== null ? displayedNumberIndex : ""}
 				
 			/>
-      {console.log("Valor de showWinnerModal:", showWinnerModal, gameStopped, )}
 			<WinnerModal game="bingo" show={gameStopped && showWinnerModal} />
 		</main>
 	);

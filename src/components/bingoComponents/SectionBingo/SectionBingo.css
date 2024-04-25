@@ -13,23 +13,18 @@
     justify-content: center;
     margin: 15px auto;
     width: fit-content;
-    pointer-events: none;
-    cursor: var(--nsr-curson1);
   
 }
 .number-wrp img{
     width: 50px;
-    pointer-events: none;
-    user-select: var(--nsr-user-select);
-    cursor: var(--nsr-curson1);  
-
+    cursor: pointer;
 }
 
 .changeGrey {
-    filter: grayscale(100%) !important;
+    filter: grayscale(100%);
     transform: scale(0.6);
-    pointer-events: auto;
-    cursor: pointer;
+    pointer-events: none;
+    cursor: auto;
 }
 
 

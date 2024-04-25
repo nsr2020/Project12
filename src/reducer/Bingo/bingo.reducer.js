@@ -1,7 +1,9 @@
+
 import bingoNumbers from "../../utils/DataBingo/dataBingo";
+import { getRandomNumbers } from "../../utils/FuntionsBingo/getRandomNumbersForCardBoard";
 
 export const INITIAL_STATE = {
-    bingoNumbersCardBoard:[], //los 15 numeros del carton
+    bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
     matchingNumbers:[], //los numeros que coinciden
     sungNumbers : [], // los numeros que se van guardando en la cuenta atras, los restantes 
     displayedNumberIndex:null,// el indice de la bola cantada 
@@ -35,11 +37,9 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
          
             };
             case "PAUSE":
-            const { isPaused, buttonsState ,intervalId} = action.payload
+            const {  buttonsState } = action.payload
             return {
                 ...state,
-                intervalId: intervalId,
-                isPaused: isPaused,
                 buttonsState: {
                     play: buttonsState.play,
                     pause: buttonsState.pause,
@@ -86,20 +86,12 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                 bingoNumbersCardBoard: newBingoCardBoard2,
             };
        
-          /*   case "TOGGLE_NUMBER_SELECTION":
-                const {updatedBingoNumbersCardBoard2}= action.payload;
+            case "TOGGLE_NUMBER_SELECTION":
+                const { updatedBingoNumbersCardBoard2 } = action.payload;
                 return {
-                    ...state,
-                    bingoNumbersCardBoard:updatedBingoNumbersCardBoard2,
-                    
-                }; */
-                                    case "TOGGLE_NUMBER_SELECTION":
-                        const { updatedBingoNumbersCardBoard2 } = action.payload;
-                        const updatedState = {
-                            ...state,
-                            bingoNumbersCardBoard: updatedBingoNumbersCardBoard2.map(number => ({ ...number })),
-                        };
-                        return updatedState;
+                  ...state,
+                  bingoNumbersCardBoard: updatedBingoNumbersCardBoard2
+                };
 
                 
               
@@ -116,10 +108,10 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
             };
 
             case "BINGO_WINNER":
-               clearInterval(state.intervalId)
+               
                 const {gameStopped4, showWinnerModal4} = action.payload;
                 return{
-                    ...INITIAL_STATE,
+                    ...state,
                     gameStopped:gameStopped4,
                     showWinnerModal:showWinnerModal4,
                 }
@@ -152,7 +144,7 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
             };
             case"CLEAN_INTERVAL":
             clearInterval(state.intervalId)
-            return state
+            return state;
                
             
         default:
