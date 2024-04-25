@@ -1,6 +1,7 @@
 
 import bingoNumbers from "../../utils/DataBingo/dataBingo";
 import { getRandomNumbers } from "../../utils/FuntionsBingo/getRandomNumbersForCardBoard";
+window.isPaused = false
 
 export const INITIAL_STATE = {
     bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
@@ -8,7 +9,7 @@ export const INITIAL_STATE = {
     sungNumbers : [], // los numeros que se van guardando en la cuenta atras, los restantes 
     displayedNumberIndex:null,// el indice de la bola cantada 
     intervalId:null, 
-    isPaused:false,
+    isPaused:window.isPaused,
     synthesis:null,
     selectedBingoNumbers:[...bingoNumbers], // un array indention al original para guardar los que sean clicados
     showWinnerModal:"", // para enseñar el modal de premio
@@ -19,7 +20,7 @@ export const INITIAL_STATE = {
         stop: false,
         newNumbers: true,
     },
-    gameStopped:false, // para controlar el fin o no del juego 
+    gameStopped:true, // para controlar el modal, poor lo que empieza en true
     calledNumber:null, //para guardar la bola cantada
     calledNumbers:[], // almacenar las bolas cantadas
     lineSung:false, // controlar si linea se ha cantado o no
@@ -32,14 +33,15 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
            
             const {gameStopped} = action.payload;
             return {
-                ...INITIAL_STATE,
+                ...state,
                 gameStopped: gameStopped,
          
             };
             case "PAUSE":
-            const {  buttonsState } = action.payload
+            const {  buttonsState, isPaused } = action.payload
             return {
                 ...state,
+                isPaused:isPaused,
                 buttonsState: {
                     play: buttonsState.play,
                     pause: buttonsState.pause,
@@ -78,6 +80,12 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                 },
               
             };
+
+            case "IS_PAUSED":
+                return{
+                    ...state,
+                    isPaused:!state.isPaused,
+                }
         case "NEW_NUMBERS":
            
             const {newBingoCardBoard2} = action.payload;
@@ -144,9 +152,36 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
             };
             case"CLEAN_INTERVAL":
             clearInterval(state.intervalId)
-            return state;
-               
-            
+            return {
+                ...state,
+                intervalId:null
+            }
+            case "CLEAN_FINAL_INTERVAL":
+                window.clearInterval(state.intervalId)
+                clearInterval(state.intervalId)
+            return {
+                bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
+                matchingNumbers:[], //los numeros que coinciden
+                sungNumbers : [], // los numeros que se van guardando en la cuenta atras, los restantes 
+                displayedNumberIndex:null,// el indice de la bola cantada 
+                intervalId:null, 
+                isPaused:window.isPaused,
+                synthesis:null,
+                selectedBingoNumbers:[...bingoNumbers], // un array indention al original para guardar los que sean clicados
+                showWinnerModal:"", // para enseñar el modal de premio
+                buttonsState:{
+                    play: true,
+                    pause: false,
+                    resume: false,
+                    stop: false,
+                    newNumbers: true,
+                },
+                gameStopped:true, // para controlar el modal, poor lo que empieza en true
+                calledNumber:null, //para guardar la bola cantada
+                calledNumbers:[], // almacenar las bolas cantadas
+                lineSung:false, // controlar si linea se ha cantado o no
+                lineWins:[0, 0, 0], // array con las posiciones de las lineas para cantar linea 
+            }  
         default:
             return state;
     }

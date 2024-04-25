@@ -6,10 +6,11 @@ import "./MainBingo.css";
 import WinnerModal from "../../WinnerModal/WinnerModal";
 import { handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
 
-const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex,
-  showWinnerModal, buttonsState, gameStopped,calledNumbers, calledNumber,lineSung, 
-  lineWins, synthesis, selectedBingoNumbers, sungNumbers, matchingNumbers }) => {
-
+const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,intervalId, showWinnerModal,
+	buttonsState,gameStopped,calledNumbers,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
+	matchingNumbers,isPaused
+ }) => {
+	console.log(isPaused);
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);
   }, []);
@@ -23,7 +24,7 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 					text="▶"
 					game="bingo"
 					onClick={()=>{
-						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers)
+						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers, isPaused)
 					}}
 					title="Play"
 					disabled={!buttonsState.play}
@@ -33,7 +34,7 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 					text="⏸"
 					game="bingo"
 					onClick={()=>{
-						handlePauseClick(dispatch)
+						handlePauseClick(dispatch, intervalId)
 					}}
 					title="Pause"
 					disabled={!buttonsState.pause}
@@ -43,7 +44,8 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 					text="🔁"
 					game="bingo"
 					onClick={()=>{
-                        handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers, matchingNumbers)
+                        handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, 
+							sungNumbers, matchingNumbers, isPaused)
 					}}
 					title="Resume"
 					disabled={!buttonsState.resume}
@@ -79,6 +81,7 @@ const MainBingo = ({ theme, dispatch ,bingoNumbersCardBoard,displayedNumberIndex
 				lineWins={lineWins}
 				dispatch={dispatch}
 				matchingNumbers={matchingNumbers}
+				intervalId={intervalId}
 			/>
 		
 			<DivBallSung

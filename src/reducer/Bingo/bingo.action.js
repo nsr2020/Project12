@@ -8,19 +8,21 @@ export 	const handleStopClick = (dispatch) => {
  
       const gameStopped = true;
       dispatch({ type: "STOP", payload: {gameStopped} });
-      dispatch({type:"CLEAN_INTERVAL"})
+      dispatch({type:"CLEAN_FINAL_INTERVAL"})
       handleNewCardGame(dispatch)
 }
 /*-------------------------------------------------------------------------------------------------------------------- */
 export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard, 
-  selectedBingoNumbers, sungNumbers, matchingNumbers) => {
-
+  selectedBingoNumbers, sungNumbers, matchingNumbers,isPaused) => {
+    
+    isPaused = !window.isPaused
+    dispatch({type:"IS_PAUSED"})
   
   let updatedSelectedBingoNumbers = [...sungNumbers]
   let matchingNumbersCopy = [...matchingNumbers]
 
   const newIntervalId = setInterval(() => {
-   
+   if(!isPaused){
     const allNumbersSung = bingoNumbersCardBoard.every(number => number.selectedBallSung);
 
     if (!allNumbersSung) {
@@ -61,7 +63,8 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
    
       updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(number => number.id !== selectedNumber.id);
       console.log(updatedSelectedBingoNumbers.length);
-      if (updatedSelectedBingoNumbers.length === 0 & sungNumbers.length >0) {
+      if (updatedSelectedBingoNumbers.length === 0 ) {
+        window.clearInterval(newIntervalId)
         dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
         const buttonsState = {
           play: false,
@@ -85,7 +88,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
         // Devolver un nuevo estado  con la información actualizada
        
     } 
-}, 2500); 
+  }}, 2500); 
     const buttonsState2 ={
       play: false,
       pause: true,
@@ -104,15 +107,12 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
   //************************************************************************************************ */
   
-  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers) => {
-
-    dispatch({type:"CLEAN_INTERVAL"})
+  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, isPaused) => {
+    isPaused = window.isPaused
     let updatedSelectedBingoNumbers = [...bingoNumbers];
     let matchingNumbersCopy = []; // aqui vamos a meter los numeros que coinciden
     const newIntervalId = setInterval(() => {
-      if (window.isPaused) {
-        return; 
-      }
+      if(!isPaused){
       let newNumberIndex;
       let selectedNumber;
       do {
@@ -155,6 +155,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
        const allNumbersSung = updatedSelectedBingoNumbers.every(number => number.selectedCardBoardBall);
         console.log(updatedSelectedBingoNumbers.length, allNumbersSung);
        if (updatedSelectedBingoNumbers.length === 0 ) {
+        window.clearInterval(newIntervalId)
         dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
         const buttonsState = {
           play: false,
@@ -184,9 +185,10 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
           updatedSelectedBingoNumbers,
           matchingNumbersCopy
         }
+      
       });
-    }, 2500);
-   
+   }}, 2500)
+  
     const gameStopped1 = false;
     const showWinnerModal1 = "";
     const buttonsState1 = {
@@ -210,7 +212,9 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
     //----------------------------------------------------------------
 
 //-------------------------------------------------
-export const handlePauseClick = (dispatch) => {
+export const handlePauseClick = (dispatch, intervalId) => {
+  window.clearInterval(intervalId)
+  window.isPaused = true
   dispatch({type:"CLEAN_INTERVAL"})
   const buttonsState = {
     play: false,
@@ -219,7 +223,7 @@ export const handlePauseClick = (dispatch) => {
     stop: true,
     newNumbers: false,
   }
-    dispatch({type: "PAUSE", payload:{buttonsState}});
+    dispatch({type: "PAUSE", payload:{buttonsState, isPaused:true}});
 };
 //----------------------------------------------------------------
 export 	const handleNewCardGame = (dispatch) => {
@@ -232,22 +236,22 @@ export 	const handleNewCardGame = (dispatch) => {
   }));
    dispatch({type: "NEW_NUMBERS" , payload:{newBingoCardBoard2}})
    checkSynthesis(dispatch)
-   dispatch({type: "CLEAN_INTERVAL"})
+  
 };
 
 ////////////////////////////////////////////////////////////////
 
-export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung, lineWins, index) => {
+export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, newIntervalId) => {
   const updatedBingoNumbersCardBoard2 = [...bingoNumbersCardBoard];
   if (index >= 0 && index < updatedBingoNumbersCardBoard2.length) {
-    // Verifica si la propiedad selectedCardBoardBall existe en el objeto
+    
     if (updatedBingoNumbersCardBoard2[index].hasOwnProperty('selectedCardBoardBall')) {
-      // Verifica si la propiedad selectedCardBoardBall ya está a true
+      
       if (!updatedBingoNumbersCardBoard2[index].selectedCardBoardBall) {
-        // La propiedad no estaba a true, así que la establecemos a true
+        
         updatedBingoNumbersCardBoard2[index].selectedCardBoardBall = true;
 
-        // Despacha una acción para actualizar el estado
+        //  actualizar el estado
         dispatch({
           type: "TOGGLE_NUMBER_SELECTION",
           payload: {
@@ -265,7 +269,7 @@ export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung,
   // Después de actualizar el estado, puedes realizar otras operaciones como verificar las líneas y el bingo
 
   checkLineWinner(dispatch, lineSung, lineWins, index);
-  checkBingoWinner(dispatch, bingoNumbersCardBoard, lineSung);
+  checkBingoWinner(dispatch, bingoNumbersCardBoard, lineSung, newIntervalId);
 }
 
  //----------------------------------------------------------------
@@ -297,7 +301,7 @@ export const checkLineWinner = (dispatch, lineSung, lineWins=[0,0,0], index) => 
     }
   }
 };
-export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung) => {
+export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung,newIntervalId) => {
   if(lineSung){
     const selectedNumbers = bingoNumbersCardBoard
       .filter((bingoNumber) => bingoNumber.selectedCardBoardBall)
@@ -306,6 +310,7 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung) => {
     // Verificar si se han seleccionado todos los números únicos
     const uniqueSelectedNumbers = new Set(selectedNumbers);
     if (uniqueSelectedNumbers.size === 15) {
+      window.clearInterval(newIntervalId)
       handlePauseClick(dispatch)
       dispatch({ type: 'RESUME', payload: { 
         buttonsState2: {
@@ -325,7 +330,7 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung) => {
         confetti()
         setTimeout(()=>{
             handleStopClick(dispatch)
-            dispatch({type:"CLEAN_INTERVAL"})
+            
         },500)
         
   };

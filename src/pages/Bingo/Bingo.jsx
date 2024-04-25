@@ -12,7 +12,7 @@ const Bingo = () => {
   const {bingoNumbersCardBoard,displayedNumberIndex,
     intervalId,showWinnerModal,buttonsState,gameStopped,
     calledNumbers,calledNumber,lineSung,lineWins, synthesis, 
-    selectedBingoNumbers, sungNumbers, matchingNumbers}=state;
+    selectedBingoNumbers, sungNumbers, matchingNumbers, isPaused}=state;
 
   const { theme } = useContext(ThemeContext);
 
@@ -23,7 +23,7 @@ const Bingo = () => {
       displayedNumberIndex={displayedNumberIndex} intervalId={intervalId} showWinnerModal={showWinnerModal}
       buttonsState={buttonsState} gameStopped={gameStopped} 
       calledNumbers={calledNumbers} calledNumber={calledNumber} lineSung={lineSung} lineWins={lineWins} synthesis={synthesis} 
-      selectedBingoNumbers={selectedBingoNumbers} sungNumbers={sungNumbers} matchingNumbers={matchingNumbers}/>
+      selectedBingoNumbers={selectedBingoNumbers} sungNumbers={sungNumbers} matchingNumbers={matchingNumbers} isPaused={isPaused}/>
      <GoBack to={'/'}/>  
     </div>
   );
