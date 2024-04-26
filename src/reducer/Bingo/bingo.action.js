@@ -304,7 +304,7 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung,newIn
           stop: false,
           newNumbers: true,
         },
-        intervalId2: null, // Asegúrate de pasar el valor correcto del intervalo si es necesario
+        intervalId2: null, 
         isPaused2: false,
         gameStopped2: false,
       }});
