@@ -1,3 +1,7 @@
+ 
+ //El array de bolas es de 75, pero hasta que funcione correctamente, lo he dejado en 20 y como el cartón tiene 15, así para probar
+ //errores es mucho más cómodo y rápido.
+ 
  const bingoNumbers = [
     { id: 1, img: 'https://res.cloudinary.com/dnju3aw4b/image/upload/v1712924871/bingoNumbers/numero-1_cb1ysa.png', selectedBallSung: false, selectedCardBoardBall: false },
     { id: 2, img: 'https://res.cloudinary.com/dnju3aw4b/image/upload/v1702836886/UCDM/GamesHub/numero-2_1_l7xfln.png', selectedBallSung: false, selectedCardBoardBall: false },
