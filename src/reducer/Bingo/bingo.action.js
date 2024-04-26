@@ -13,13 +13,13 @@ export 	const handleStopClick = (dispatch) => {
 }
 /*-------------------------------------------------------------------------------------------------------------------- */
 export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard, 
-  selectedBingoNumbers, sungNumbers, matchingNumbers,isPaused) => {
+  selectedBingoNumbers, sungNumbers, isPaused) => {
     
     isPaused = !window.isPaused
     dispatch({type:"IS_PAUSED"})
   
   let updatedSelectedBingoNumbers = [...sungNumbers]
-  let matchingNumbersCopy = [...matchingNumbers]
+ 
 
   const newIntervalId = setInterval(() => {
    if(!isPaused){
@@ -52,14 +52,14 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
       const allNumbersClicked = bingoNumbersCardBoard.every(number => number.selectedCardBoardBall);
       console.log(allNumbersClicked);
-
+/* 
       bingoNumbersCardBoard.forEach((bingoNumber) => {
         if (bingoNumber.id === numberSung) {
             matchingNumbersCopy.push(bingoNumber);
         }
     });
     console.log(matchingNumbersCopy.length)
-    console.log(matchingNumbersCopy);
+    console.log(matchingNumbersCopy); */
    
       updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(number => number.id !== selectedNumber.id);
       console.log(updatedSelectedBingoNumbers.length);
@@ -83,7 +83,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
       }
 
       dispatch({type:"UPDATE_DISPLAYED_NUMBER_INDEX", payload:{selectedNumber,updatedBingoNumbersCardBoard,
-        allNumbersSung, newIntervalId, updatedSelectedBingoNumbers,matchingNumbersCopy }})
+        allNumbersSung, newIntervalId, updatedSelectedBingoNumbers }})
 
         // Devolver un nuevo estado  con la información actualizada
        
@@ -109,8 +109,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
   
   export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, isPaused) => {
     isPaused = window.isPaused
-    let updatedSelectedBingoNumbers = [...bingoNumbers];
-    let matchingNumbersCopy = []; // aqui vamos a meter los numeros que coinciden
+    let updatedSelectedBingoNumbers = [...selectedBingoNumbers];
     const newIntervalId = setInterval(() => {
       if(!isPaused){
       let newNumberIndex;
@@ -142,13 +141,17 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
       console.log(allNumbersClicked);
 
 
-      bingoNumbersCardBoard.forEach((bingoNumber) => {
+      /* bingoNumbersCardBoard.forEach((bingoNumber) => {
           if (bingoNumber.id === numberSung) {
               matchingNumbersCopy.push(bingoNumber);
+              
           }
       });
-      console.log(matchingNumbersCopy.length)
-      console.log(matchingNumbersCopy);
+      matchingNumbersCopy.forEach((matchingNumber) => {
+        matchingNumber.selectedCardBoardBall = true;
+      }); */
+             
+      
 
       updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(number => number.id !== selectedNumber.id);
        // Verificar si todos los números han sido cantados
@@ -165,12 +168,6 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
           newNumbers: false,
         }
           dispatch({type: "PAUSE", payload:{ buttonsState}});
-      /*   setTimeout(()=>{
-          alert("No has seleccionado todos los números a tiempo!!!!")
-          const gameStopped = true;
-          dispatch({ type: "STOP", payload: {gameStopped} });
-          initializeBingoCardBoard(dispatch)
-        },4000) */
       }
       
       // Devolver un nuevo estado con la información actualizada
@@ -183,7 +180,6 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
           allNumbersSung,
           newIntervalId,
           updatedSelectedBingoNumbers,
-          matchingNumbersCopy
         }
       
       });
@@ -241,35 +237,31 @@ export 	const handleNewCardGame = (dispatch) => {
 
 ////////////////////////////////////////////////////////////////
 
-export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, newIntervalId) => {
+export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung, lineWins, 
+  numIndex, newIntervalId) => {
+ 
   const updatedBingoNumbersCardBoard2 = [...bingoNumbersCardBoard];
-  if (index >= 0 && index < updatedBingoNumbersCardBoard2.length) {
-    
-    if (updatedBingoNumbersCardBoard2[index].hasOwnProperty('selectedCardBoardBall')) {
+  if (numIndex >= 0 && numIndex < updatedBingoNumbersCardBoard2.length) {
+         
+        updatedBingoNumbersCardBoard2[numIndex].selectedCardBoardBall = true;
       
-      if (!updatedBingoNumbersCardBoard2[index].selectedCardBoardBall) {
-        
-        updatedBingoNumbersCardBoard2[index].selectedCardBoardBall = true;
 
         //  actualizar el estado
         dispatch({
           type: "TOGGLE_NUMBER_SELECTION",
           payload: {
-            updatedBingoNumbersCardBoard2
+            updatedBingoNumbersCardBoard2,
+            
           }
         });
-      }
-    } else {
-      console.error(`El objeto en el índice ${index} no tiene la propiedad 'selectedCardBoardBall'.`);
-    }
-  } else {
-    console.error(`El índice ${index} está fuera del rango válido.`);
-  }
+  } 
 
   // Después de actualizar el estado, puedes realizar otras operaciones como verificar las líneas y el bingo
 
-  checkLineWinner(dispatch, lineSung, lineWins, index);
+  checkLineWinner(dispatch, lineSung, lineWins, numIndex);
+  if(lineSung){
   checkBingoWinner(dispatch, bingoNumbersCardBoard, lineSung, newIntervalId);
+  }
 }
 
  //----------------------------------------------------------------
@@ -347,7 +339,11 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung,newIn
     handleNewCardGame(dispatch)
     checkSynthesis(dispatch)
     };
-
+  
+    export const updateSelectedIndexs =(index, selectedIndexs, dispatch)=>{
+      const updateSelectedIndexes = [...selectedIndexs, index]
+      dispatch({type:"SELECTED_INDEXES", selectedIndexs:updateSelectedIndexes});
+    }
 
     
 

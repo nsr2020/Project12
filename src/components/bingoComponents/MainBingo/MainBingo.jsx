@@ -7,8 +7,8 @@ import WinnerModal from "../../WinnerModal/WinnerModal";
 import { handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
 
 const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,intervalId, showWinnerModal,
-	buttonsState,gameStopped,calledNumbers,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
-	matchingNumbers,isPaused
+	buttonsState,gameStopped,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
+	isPaused,selectedIndexs
  }) => {
 	console.log(isPaused);
    useEffect(() => { 
@@ -45,7 +45,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					game="bingo"
 					onClick={()=>{
                         handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, 
-							sungNumbers, matchingNumbers, isPaused)
+							sungNumbers, isPaused)
 					}}
 					title="Resume"
 					disabled={!buttonsState.resume}
@@ -74,14 +74,13 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 			<SectionBingo
 				theme={theme}
 				bingoNumbersCardBoard={bingoNumbersCardBoard}
-				calledNumbers={calledNumbers}
 				calledNumber={calledNumber}
 				buttonsState={buttonsState}
 				lineSung={lineSung}
 				lineWins={lineWins}
 				dispatch={dispatch}
-				matchingNumbers={matchingNumbers}
 				intervalId={intervalId}
+				selectedIndexs={selectedIndexs}
 			/>
 		
 			<DivBallSung

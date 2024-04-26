@@ -5,11 +5,11 @@ window.isPaused = false
 
 export const INITIAL_STATE = {
     bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
-    matchingNumbers:[], //los numeros que coinciden
     sungNumbers : [], // los numeros que se van guardando en la cuenta atras, los restantes 
+    selectedIndexs:[], // lo usaremos en Section para guardar los indices de los numeros clicados
     displayedNumberIndex:null,// el indice de la bola cantada 
     intervalId:null, 
-    isPaused:window.isPaused,
+    isPaused:false,
     synthesis:null,
     selectedBingoNumbers:[...bingoNumbers], // un array indention al original para guardar los que sean clicados
     showWinnerModal:"", // para enseñar el modal de premio
@@ -126,13 +126,12 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
 
         case "UPDATE_DISPLAYED_NUMBER_INDEX":
             const { selectedNumber, updatedBingoNumbersCardBoard, allNumbersSung, 
-                newIntervalId, updatedSelectedBingoNumbers, matchingNumbersCopy} = action.payload;
+                newIntervalId, updatedSelectedBingoNumbers} = action.payload;
       
             return {
                 ...state,
                 calledNumber: selectedNumber.id,
                 displayedNumberIndex: selectedNumber.id - 1,
-                matchingNumbers:matchingNumbersCopy,
                 sungNumbers:updatedSelectedBingoNumbers,
                 bingoNumbersCardBoard: updatedBingoNumbersCardBoard,
                 showWinnerModal: allNumbersSung ? "bingo" : "",
@@ -156,16 +155,22 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                 ...state,
                 intervalId:null
             }
+            case "SELECTED_INDEXES":
+                return{
+                    ...state,
+                    selectedIndexs:action.selectedIndexs
+                }
             case "CLEAN_FINAL_INTERVAL":
                 window.clearInterval(state.intervalId)
                 clearInterval(state.intervalId)
             return {
                 bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
-                matchingNumbers:[], //los numeros que coinciden
+                
                 sungNumbers : [], // los numeros que se van guardando en la cuenta atras, los restantes 
+                selectedIndexs:[],
                 displayedNumberIndex:null,// el indice de la bola cantada 
                 intervalId:null, 
-                isPaused:window.isPaused,
+                isPaused:false,
                 synthesis:null,
                 selectedBingoNumbers:[...bingoNumbers], // un array indention al original para guardar los que sean clicados
                 showWinnerModal:"", // para enseñar el modal de premio
