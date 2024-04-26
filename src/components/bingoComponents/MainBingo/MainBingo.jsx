@@ -10,6 +10,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 	buttonsState,gameStopped,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
 	isPaused,selectedIndexs
  }) => {
+
 	
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);

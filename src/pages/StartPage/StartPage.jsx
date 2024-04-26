@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import './StartPage.css';
 import { useNavigate } from "react-router-dom";
-import WinnerModal from '../../components/WinnerModal/WinnerModal';
-import { checkSwal } from '../../utils/FuntionsTicTacToe/swal';
 
 const StartPage = () => {
   const [addClass, setAddClass] = useState(false)
