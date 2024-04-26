@@ -10,7 +10,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 	buttonsState,gameStopped,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
 	isPaused,selectedIndexs
  }) => {
-	console.log(isPaused);
+	
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);
   }, []);
@@ -24,7 +24,8 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					text="▶"
 					game="bingo"
 					onClick={()=>{
-						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers, isPaused)
+						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers,
+							 isPaused, lineSung)
 					}}
 					title="Play"
 					disabled={!buttonsState.play}
@@ -45,7 +46,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					game="bingo"
 					onClick={()=>{
                         handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, 
-							sungNumbers, isPaused)
+							sungNumbers, isPaused, lineSung)
 					}}
 					title="Resume"
 					disabled={!buttonsState.resume}

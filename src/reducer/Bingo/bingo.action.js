@@ -7,13 +7,13 @@ import { sayNumber } from "../../utils/FuntionsBingo/sayNumber";
 export 	const handleStopClick = (dispatch) => {
  
       const gameStopped = true;
-      dispatch({ type: "STOP", payload: {gameStopped} });
+      dispatch({ type: "STOP", payload: {gameStopped} ,showWinnerModal:""});
       dispatch({type:"CLEAN_FINAL_INTERVAL"})
       handleNewCardGame(dispatch)
 }
 /*-------------------------------------------------------------------------------------------------------------------- */
 export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard, 
-  selectedBingoNumbers, sungNumbers, isPaused) => {
+  selectedBingoNumbers, sungNumbers, isPaused, lineSung) => {
     
     isPaused = !window.isPaused
     dispatch({type:"IS_PAUSED"})
@@ -52,18 +52,11 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
       const allNumbersClicked = bingoNumbersCardBoard.every(number => number.selectedCardBoardBall);
       console.log(allNumbersClicked);
-/* 
-      bingoNumbersCardBoard.forEach((bingoNumber) => {
-        if (bingoNumber.id === numberSung) {
-            matchingNumbersCopy.push(bingoNumber);
-        }
-    });
-    console.log(matchingNumbersCopy.length)
-    console.log(matchingNumbersCopy); */
    
       updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(number => number.id !== selectedNumber.id);
       console.log(updatedSelectedBingoNumbers.length);
-      if (updatedSelectedBingoNumbers.length === 0 ) {
+
+      if (updatedSelectedBingoNumbers.length === 0 && !lineSung ) {
         window.clearInterval(newIntervalId)
         dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
         const buttonsState = {
@@ -74,12 +67,14 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
           newNumbers: false,
         }
           dispatch({type: "PAUSE", payload:{ buttonsState}});
-        /* setTimeout(()=>{
-          alert("No has seleccionado todos los números a tiempo!!!!")
-          const gameStopped = true;
-          dispatch({ type: "STOP", payload: {gameStopped} });
-          initializeBingoCardBoard(dispatch)
-        },4000) */
+          if(!lineSung){
+            setTimeout(()=>{
+              alert("No has seleccionado todos los números a tiempo!!!!")
+              const gameStopped = true;
+              dispatch({ type: "STOP", payload: {gameStopped}, showWinnerModal:""});
+             
+            },3000)
+          }
       }
 
       dispatch({type:"UPDATE_DISPLAYED_NUMBER_INDEX", payload:{selectedNumber,updatedBingoNumbersCardBoard,
@@ -107,7 +102,7 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
 
   //************************************************************************************************ */
   
-  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, isPaused) => {
+  export const handlePlayClick = (dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, isPaused, lineSung) => {
     isPaused = window.isPaused
     let updatedSelectedBingoNumbers = [...selectedBingoNumbers];
     const newIntervalId = setInterval(() => {
@@ -139,27 +134,16 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
       });
       const allNumbersClicked = bingoNumbersCardBoard.every(number => number.selectedCardBoardBall);
       console.log(allNumbersClicked);
-
-
-      /* bingoNumbersCardBoard.forEach((bingoNumber) => {
-          if (bingoNumber.id === numberSung) {
-              matchingNumbersCopy.push(bingoNumber);
-              
-          }
-      });
-      matchingNumbersCopy.forEach((matchingNumber) => {
-        matchingNumber.selectedCardBoardBall = true;
-      }); */
-             
       
 
       updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(number => number.id !== selectedNumber.id);
        // Verificar si todos los números han sido cantados
        const allNumbersSung = updatedSelectedBingoNumbers.every(number => number.selectedCardBoardBall);
         console.log(updatedSelectedBingoNumbers.length, allNumbersSung);
-       if (updatedSelectedBingoNumbers.length === 0 ) {
+
+       if (updatedSelectedBingoNumbers.length === 0) {
         window.clearInterval(newIntervalId)
-        dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null}})
+        dispatch({type:"CLEAN_INTERVAL", payload:{intervalId3:null,gameStopped:true}})
         const buttonsState = {
           play: false,
           pause: false,
@@ -168,6 +152,14 @@ export const handleResumeClick = ( dispatch, synthesis,bingoNumbersCardBoard,
           newNumbers: false,
         }
           dispatch({type: "PAUSE", payload:{ buttonsState}});
+          if(!lineSung){
+          setTimeout(()=>{
+            alert("No has seleccionado todos los números a tiempo!!!!")
+            const gameStopped = true;
+            dispatch({ type: "STOP", payload: {gameStopped}, showWinnerModal:"" });
+            
+          },3000)
+        }
       }
       
       // Devolver un nuevo estado con la información actualizada
@@ -256,7 +248,7 @@ export const toggleNumberSelection = (dispatch, bingoNumbersCardBoard, lineSung,
         });
   } 
 
-  // Después de actualizar el estado, puedes realizar otras operaciones como verificar las líneas y el bingo
+  
 
   checkLineWinner(dispatch, lineSung, lineWins, numIndex);
   if(lineSung){
@@ -316,14 +308,11 @@ export const checkBingoWinner = (dispatch, bingoNumbersCardBoard, lineSung,newIn
         isPaused2: false,
         gameStopped2: false,
       }});
-      /*   const gameStopped4 = true;
-        const showWinnerModal4 = "bingo"; */
-        dispatch({type: 'BINGO_WINNER', payload:{gameStopped4:true,showWinnerModal4:"bingo"}})
+        dispatch({type: 'BINGO_WINNER', showWinnerModal:"bingo", gameStopped:true})
         confetti()
         setTimeout(()=>{
-            handleStopClick(dispatch)
-            
-        },500)
+            handleStopClick(dispatch)   
+        },1000)
         
   };
 }

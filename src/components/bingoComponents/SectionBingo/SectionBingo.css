@@ -20,13 +20,13 @@
     cursor: pointer;
 }
 
-.changeGrey {
+/* .changeGrey {
     filter: grayscale(100%);
     transform: scale(0.6);
     pointer-events: none;
     cursor: auto;
 }
-
+ */
 
   @media(max-width:600px){
     .board-bingo .game-bingo{

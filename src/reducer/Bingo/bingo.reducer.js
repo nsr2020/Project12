@@ -20,7 +20,7 @@ export const INITIAL_STATE = {
         stop: false,
         newNumbers: true,
     },
-    gameStopped:true, // para controlar el modal, poor lo que empieza en true
+    gameStopped:false, // para controlar el modal, 
     calledNumber:null, //para guardar la bola cantada
     calledNumbers:[], // almacenar las bolas cantadas
     lineSung:false, // controlar si linea se ha cantado o no
@@ -32,8 +32,10 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
         case "STOP":
            
             const {gameStopped} = action.payload;
+            clearInterval(state.intervalId)
             return {
                 ...state,
+                showWinnerModal:action.showWinnerModal,
                 gameStopped: gameStopped,
          
             };
@@ -117,11 +119,12 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
 
             case "BINGO_WINNER":
                
-                const {gameStopped4, showWinnerModal4} = action.payload;
+                
                 return{
                     ...state,
-                    gameStopped:gameStopped4,
-                    showWinnerModal:showWinnerModal4,
+                    showWinnerModal:action.showWinnerModal,
+                    gameStopped:action.gameStopped,
+                    
                 }
 
         case "UPDATE_DISPLAYED_NUMBER_INDEX":
@@ -181,7 +184,7 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                     stop: false,
                     newNumbers: true,
                 },
-                gameStopped:true, // para controlar el modal, poor lo que empieza en true
+                gameStopped:false, // para controlar el modal, poor lo que empieza en true
                 calledNumber:null, //para guardar la bola cantada
                 calledNumbers:[], // almacenar las bolas cantadas
                 lineSung:false, // controlar si linea se ha cantado o no

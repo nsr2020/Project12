@@ -1,18 +1,14 @@
 
 import "./SectionBingo.css";
 import { toggleNumberSelection, updateSelectedIndexs } from "../../../reducer/Bingo/bingo.action";
-import classNames from 'classnames';
 
 const SectionBingo = ({ theme, bingoNumbersCardBoard, calledNumber,
   buttonsState, lineSung, lineWins, dispatch, matchingNumbers, intervalId, selectedIndexs }) => {
   const { play } = buttonsState;
-  /* const [selectedIndexs, setselectedIndexs] = useState([]); */
 
   const handleClick = (index, id) => {
     if (!play && id === calledNumber) {
-      // Actualizar el estado de los números seleccionados
       updateSelectedIndexs(index, selectedIndexs, dispatch);
-      // Llamar a la acción para alternar la selección del número
       toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, id, intervalId, matchingNumbers);
     }
   };
