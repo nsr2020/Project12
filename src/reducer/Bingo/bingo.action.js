@@ -19,13 +19,13 @@ export const handleResumeClick = (
 	isPaused,
 	lineSung
 ) => {
-	isPaused = !window.isPaused;
-	dispatch({ type: "IS_PAUSED" });
+	
+	dispatch({ type: "IS_PAUSED", isPaused:false }); // lo pongo aqui para que lo cambie a false ya que reanuda el juego
 
 	let updatedSelectedBingoNumbers = [...sungNumbers];
-
+console.log(isPaused);
 	const newIntervalId = setInterval(() => {
-		if (!isPaused) {
+		if (isPaused) {
 			const allNumbersSung = bingoNumbersCardBoard.every(
 				(number) => number.selectedBallSung
 			);
@@ -134,10 +134,10 @@ export const handlePlayClick = (
 	isPaused,
 	lineSung
 ) => {
-	isPaused = window.isPaused;
+  console.log(isPaused);
 	let updatedSelectedBingoNumbers = [...selectedBingoNumbers];
 	const newIntervalId = setInterval(() => {
-		if (!isPaused) {
+		if (isPaused === false) {
 			let newNumberIndex;
 			let selectedNumber;
 			do {
@@ -246,8 +246,8 @@ export const handlePlayClick = (
 
 //-------------------------------------------------
 export const handlePauseClick = (dispatch, intervalId) => {
-	window.clearInterval(intervalId);
-	window.isPaused = true;
+	/* window.clearInterval(intervalId);
+	window.isPaused = true; */
 	dispatch({ type: "CLEAN_INTERVAL" });
 	const buttonsState = {
 		play: false,
@@ -346,10 +346,10 @@ export const checkBingoWinner = (
 			.filter((bingoNumber) => bingoNumber.selectedCardBoardBall)
 			.map((bingoNumber) => bingoNumber.id);
 
-		// Verificar si se han seleccionado todos los números únicos
+		
 		const uniqueSelectedNumbers = new Set(selectedNumbers);
+    console.log(uniqueSelectedNumbers.size);
 		if (uniqueSelectedNumbers.size === 15) {
-			window.clearInterval(newIntervalId);
 			handlePauseClick(dispatch);
 			dispatch({
 				type: "RESUME",
@@ -374,6 +374,7 @@ export const checkBingoWinner = (
 			confetti();
 			setTimeout(() => {
 				handleStopClick(dispatch);
+        initializeBingoCardBoard(dispatch)
 			}, 1000);
 		}
 	}

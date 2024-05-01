@@ -27,12 +27,14 @@ const Bingo = () => {
 	} = state;
 
 	const { theme } = useContext(ThemeContext);
+	const {play} = buttonsState
+
 
 	return (
 		<div
 			className={`App color-${theme} flex-container bingo-container animated slideInLeft`}
 		>
-			<ThemeSwitcher />
+			<ThemeSwitcher play={play} />
 			<MainBingo
 				theme={theme}
 				dispatch={dispatch}

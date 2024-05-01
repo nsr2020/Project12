@@ -15,6 +15,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
    useEffect(() => { 
     initializeBingoCardBoard(dispatch);
   }, []);
+  console.log(isPaused);
  
 	return (
 		<main className={`color-${theme} flex-container board-bingo`}>
@@ -25,7 +26,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					text="▶"
 					game="bingo"
 					onClick={()=>{
-						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, sungNumbers,
+						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers,
 							 isPaused, lineSung)
 					}}
 					title="Play"

@@ -1,7 +1,7 @@
 
 import bingoNumbers from "../../utils/DataBingo/dataBingo";
 import { getRandomNumbers } from "../../utils/FuntionsBingo/getRandomNumbersForCardBoard";
-window.isPaused = false
+
 
 export const INITIAL_STATE = {
     bingoNumbersCardBoard:getRandomNumbers(), //los 15 numeros del carton
@@ -86,7 +86,7 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
             case "IS_PAUSED":
                 return{
                     ...state,
-                    isPaused:!state.isPaused,
+                    isPaused:action.isPaused,
                 }
         case "NEW_NUMBERS":
            
