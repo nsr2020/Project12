@@ -11,118 +11,115 @@ export const handleStopClick = (dispatch) => {
 };
 /*-------------------------------------------------------------------------------------------------------------------- */
 export const handleResumeClick = (
-	dispatch,
-	synthesis,
-	bingoNumbersCardBoard,
-	selectedBingoNumbers,
-	sungNumbers,
-	isPaused,
-	lineSung
+  dispatch,
+  synthesis,
+  bingoNumbersCardBoard,
+  selectedBingoNumbers,
+  sungNumbers,
+  lineSung
 ) => {
-	
-	dispatch({ type: "IS_PAUSED", isPaused:false }); // lo pongo aqui para que lo cambie a false ya que reanuda el juego
+  
+  /* dispatch({ type: "IS_PAUSED", isPaused:false });  */
 
-	let updatedSelectedBingoNumbers = [...sungNumbers];
-console.log(isPaused);
-	const newIntervalId = setInterval(() => {
-		if (isPaused) {
-			const allNumbersSung = bingoNumbersCardBoard.every(
-				(number) => number.selectedBallSung
-			);
+  let updatedSelectedBingoNumbers = [...sungNumbers];
 
-			if (!allNumbersSung) {
-				let newNumberIndex1;
-				let selectedNumber;
-				do {
-					newNumberIndex1 = Math.floor(
-						Math.random() * selectedBingoNumbers.length
-					);
-					selectedNumber = selectedBingoNumbers[newNumberIndex1];
-				} while (selectedBingoNumbers[newNumberIndex1].selectedBallSung);
+  const newIntervalId = setInterval(() => {
 
-				selectedNumber.selectedBallSung = true;
-				const numberSung = selectedNumber.id;
+      const allNumbersSung = bingoNumbersCardBoard.every(
+          (number) => number.selectedBallSung
+      );
 
-				sayNumber(numberSung, synthesis);
+      if (!allNumbersSung) {
+          let newNumberIndex1;
+          let selectedNumber;
+          do {
+              newNumberIndex1 = Math.floor(
+                  Math.random() * selectedBingoNumbers.length
+              );
+              selectedNumber = selectedBingoNumbers[newNumberIndex1];
+          } while (selectedBingoNumbers[newNumberIndex1].selectedBallSung);
 
-				const updatedBingoNumbersCardBoard = bingoNumbersCardBoard.map(
-					(number, index) => {
-						if (index === newNumberIndex1) {
-							return {
-								...number,
-								selectedBallSung: true,
-							};
-						}
+          selectedNumber.selectedBallSung = true;
+          const numberSung = selectedNumber.id;
 
-						return number;
-					}
-				);
+          sayNumber(numberSung, synthesis);
 
-				const allNumbersClicked = bingoNumbersCardBoard.every(
-					(number) => number.selectedCardBoardBall
-				);
-				console.log(allNumbersClicked);
+          const updatedBingoNumbersCardBoard = bingoNumbersCardBoard.map(
+              (number, index) => {
+                  if (index === newNumberIndex1) {
+                      return {
+                          ...number,
+                          selectedBallSung: true,
+                      };
+                  }
 
-				updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(
-					(number) => number.id !== selectedNumber.id
-				);
-				console.log(updatedSelectedBingoNumbers.length);
+                  return number;
+              }
+          );
 
-				if (updatedSelectedBingoNumbers.length === 0 && !lineSung) {
-					window.clearInterval(newIntervalId);
-					dispatch({ type: "CLEAN_INTERVAL", payload: { intervalId3: null } });
-					const buttonsState = {
-						play: false,
-						pause: false,
-						resume: false,
-						stop: true,
-						newNumbers: false,
-					};
-					dispatch({ type: "PAUSE", payload: { buttonsState } });
-					if (!lineSung) {
-						setTimeout(() => {
-							alert("No has seleccionado todos los números a tiempo!!!!");
-							const gameStopped = true;
-							dispatch({
-								type: "STOP",
-								payload: { gameStopped },
-								showWinnerModal: "",
-							});
-						}, 3000);
-					}
-				}
+          const allNumbersClicked = bingoNumbersCardBoard.every(
+              (number) => number.selectedCardBoardBall
+          );
+          console.log(allNumbersClicked);
 
-				dispatch({
-					type: "UPDATE_DISPLAYED_NUMBER_INDEX",
-					payload: {
-						selectedNumber,
-						updatedBingoNumbersCardBoard,
-						allNumbersSung,
-						newIntervalId,
-						updatedSelectedBingoNumbers,
-					},
-				});
+          updatedSelectedBingoNumbers = updatedSelectedBingoNumbers.filter(
+              (number) => number.id !== selectedNumber.id
+          );
+          console.log(updatedSelectedBingoNumbers.length);
 
-				// Devolver un nuevo estado  con la información actualizada
-			}
-		}
-	}, 2500);
-	const buttonsState2 = {
-		play: false,
-		pause: true,
-		resume: false,
-		stop: false,
-		newNumbers: false,
-	};
-	const intervalId2 = newIntervalId;
-	const isPaused2 = false;
-	const gameStopped2 = false;
+          if (updatedSelectedBingoNumbers.length === 0 && !lineSung) {
+              window.clearInterval(newIntervalId);
+              dispatch({ type: "CLEAN_INTERVAL", payload: { intervalId3: null } });
+              const buttonsState = {
+                  play: false,
+                  pause: false,
+                  resume: false,
+                  stop: true,
+                  newNumbers: false,
+              };
+              dispatch({ type: "PAUSE", payload: { buttonsState } });
+              if (!lineSung) {
+                  setTimeout(() => {
+                      alert("No has seleccionado todos los números a tiempo!!!!");
+                      const gameStopped = true;
+                      dispatch({
+                          type: "STOP",
+                          payload: { gameStopped },
+                          showWinnerModal: "",
+                      });
+                  }, 3000);
+              }
+          }
 
-	dispatch({
-		type: "RESUME",
-		payload: { buttonsState2, intervalId2, isPaused2, gameStopped2 },
-	});
+          dispatch({
+              type: "UPDATE_DISPLAYED_NUMBER_INDEX",
+              payload: {
+                  selectedNumber,
+                  updatedBingoNumbersCardBoard,
+                  allNumbersSung,
+                  newIntervalId,
+                  updatedSelectedBingoNumbers,
+              },
+          });
+      }
+  }, 3000);
+  const buttonsState2 = {
+      play: false,
+      pause: true,
+      resume: false,
+      stop: false,
+      newNumbers: false,
+  };
+  const intervalId2 = newIntervalId;
+  const isPaused2 = false;
+  const gameStopped2 = false;
+
+  dispatch({
+      type: "RESUME",
+      payload: { buttonsState2, intervalId2, isPaused2, gameStopped2 },
+  });
 };
+
 
 //************************************************************************************************ */
 
@@ -181,7 +178,7 @@ export const handlePlayClick = (
 			console.log(updatedSelectedBingoNumbers.length, allNumbersSung);
 
 			if (updatedSelectedBingoNumbers.length === 0) {
-				window.clearInterval(newIntervalId);
+			
 				dispatch({
 					type: "CLEAN_INTERVAL",
 					payload: { intervalId3: null, gameStopped: true },
@@ -220,7 +217,7 @@ export const handlePlayClick = (
 				},
 			});
 		}
-	}, 2500);
+	}, 3000);
 
 	const gameStopped1 = false;
 	const showWinnerModal1 = "";
@@ -245,7 +242,7 @@ export const handlePlayClick = (
 //----------------------------------------------------------------
 
 //-------------------------------------------------
-export const handlePauseClick = (dispatch, intervalId) => {
+export const handlePauseClick = (dispatch) => {
 	/* window.clearInterval(intervalId);
 	window.isPaused = true; */
 	dispatch({ type: "CLEAN_INTERVAL" });
@@ -278,7 +275,6 @@ export const toggleNumberSelection = (
 	lineSung,
 	lineWins,
 	numIndex,
-	newIntervalId
 ) => {
 	const updatedBingoNumbersCardBoard2 = [...bingoNumbersCardBoard];
 	if (numIndex >= 0 && numIndex < updatedBingoNumbersCardBoard2.length) {
@@ -295,7 +291,7 @@ export const toggleNumberSelection = (
 
 	checkLineWinner(dispatch, lineSung, lineWins, numIndex);
 	if (lineSung) {
-		checkBingoWinner(dispatch, bingoNumbersCardBoard, lineSung, newIntervalId);
+		checkBingoWinner(dispatch, bingoNumbersCardBoard);
 	}
 };
 
@@ -338,10 +334,9 @@ export const checkLineWinner = (
 export const checkBingoWinner = (
 	dispatch,
 	bingoNumbersCardBoard,
-	lineSung,
-	newIntervalId
+	
 ) => {
-	if (lineSung) {
+	
 		const selectedNumbers = bingoNumbersCardBoard
 			.filter((bingoNumber) => bingoNumber.selectedCardBoardBall)
 			.map((bingoNumber) => bingoNumber.id);
@@ -377,7 +372,7 @@ export const checkBingoWinner = (
         initializeBingoCardBoard(dispatch)
 			}, 1000);
 		}
-	}
+	
 };
 
 //----------------------------------------------------------------

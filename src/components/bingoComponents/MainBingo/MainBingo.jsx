@@ -37,7 +37,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					text="⏸"
 					game="bingo"
 					onClick={()=>{
-						handlePauseClick(dispatch, intervalId)
+						handlePauseClick(dispatch)
 					}}
 					title="Pause"
 					disabled={!buttonsState.pause}
@@ -48,7 +48,7 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					game="bingo"
 					onClick={()=>{
                         handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, 
-							sungNumbers, isPaused, lineSung)
+							sungNumbers,lineSung)
 					}}
 					title="Resume"
 					disabled={!buttonsState.resume}
@@ -82,7 +82,6 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 				lineSung={lineSung}
 				lineWins={lineWins}
 				dispatch={dispatch}
-				intervalId={intervalId}
 				selectedIndexs={selectedIndexs}
 			/>
 		

@@ -3,13 +3,13 @@ import "./SectionBingo.css";
 import { toggleNumberSelection, updateSelectedIndexs } from "../../../reducer/Bingo/bingo.action";
 
 const SectionBingo = ({ theme, bingoNumbersCardBoard, calledNumber,
-  buttonsState, lineSung, lineWins, dispatch, matchingNumbers, intervalId, selectedIndexs }) => {
+  buttonsState, lineSung, lineWins, dispatch, selectedIndexs }) => {
   const { play } = buttonsState;
 
   const handleClick = (index, id) => {
     if (!play && id === calledNumber) {
       updateSelectedIndexs(index, selectedIndexs, dispatch);
-      toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, id, intervalId, matchingNumbers);
+      toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index);
     }
   };
   console.log(selectedIndexs);
