@@ -1,21 +1,18 @@
-import { useEffect} from "react";
+
 import Button from "../../Button/Button";
 import DivBallSung from "../DivBallSung/DivBallSung";
 import SectionBingo from "../SectionBingo/SectionBingo";
 import "./MainBingo.css";
 import WinnerModal from "../../WinnerModal/WinnerModal";
-import { handleNewCardGame, handlePauseClick, handlePlayClick, handleResumeClick, handleStopClick, initializeBingoCardBoard } from "../../../reducer/Bingo/bingo.action";
+import { handleInfoGame, handleNewCardGame, handlePauseClick, handlePlayClick, handleStopClick} from "../../../reducer/Bingo/bingo.action";
+import { useEffect } from "react";
 
-const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,intervalId, showWinnerModal,
-	buttonsState,gameStopped,calledNumber,lineSung,lineWins,synthesis,selectedBingoNumbers,sungNumbers,
-	isPaused,selectedIndexs
+const MainBingo = ({ theme, dispatch,paused,ourRandomNumbers,allNumbers,actualNumber,showModal,selectedNumbers
  }) => {
+	useEffect(()=>{
+		handleStopClick(dispatch)
+	},[])
 
-	
-   useEffect(() => { 
-    initializeBingoCardBoard(dispatch);
-  }, []);
-  console.log(isPaused);
  
 	return (
 		<main className={`color-${theme} flex-container board-bingo`}>
@@ -26,11 +23,10 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 					text="▶"
 					game="bingo"
 					onClick={()=>{
-						handlePlayClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers,
-							 isPaused, lineSung)
+						handlePlayClick(dispatch,allNumbers,paused)
 					}}
 					title="Play"
-					disabled={!buttonsState.play}
+					disabled={paused !== 0}
 				/>
 				<Button
 					theme={theme}
@@ -40,18 +36,17 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 						handlePauseClick(dispatch)
 					}}
 					title="Pause"
-					disabled={!buttonsState.pause}
+					disabled={paused === 0 || paused === 2 || paused === 4}
 				/>
 				<Button
 					theme={theme}
 					text="🔁"
 					game="bingo"
 					onClick={()=>{
-                        handleResumeClick(dispatch, synthesis,bingoNumbersCardBoard, selectedBingoNumbers, 
-							sungNumbers,lineSung)
+                        handlePlayClick(dispatch,allNumbers)
 					}}
 					title="Resume"
-					disabled={!buttonsState.resume}
+					disabled={ paused === 0 || paused === 3 || paused === 4 || paused === 1}
 				/>
 				<Button
 					theme={theme}
@@ -61,7 +56,8 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 						handleStopClick(dispatch)
 					}}
 					title="Stop"
-					disabled={!buttonsState.stop}
+					disabled={paused === 0 }
+					
 				/>
 				<Button
 					theme={theme}
@@ -71,25 +67,32 @@ const MainBingo = ({ theme, dispatch,bingoNumbersCardBoard,displayedNumberIndex,
 						handleNewCardGame(dispatch)
 					}}
 					title="New Numbers"
-					disabled={!buttonsState.newNumbers}
+					disabled={paused !==0}
+				/>
+					<Button
+					theme={theme}
+					text="ℹ"
+					game="bingo"
+					onClick={()=>{
+						handleInfoGame(dispatch)
+					}}
+					title="Info about this game"
+					disabled={paused !==0}
 				/>
 			</div>
 			<SectionBingo
 				theme={theme}
-				bingoNumbersCardBoard={bingoNumbersCardBoard}
-				calledNumber={calledNumber}
-				buttonsState={buttonsState}
-				lineSung={lineSung}
-				lineWins={lineWins}
 				dispatch={dispatch}
-				selectedIndexs={selectedIndexs}
+				ourRandomNumbers={ourRandomNumbers}
+				actualNumber={actualNumber}
+				selectedNumbers={selectedNumbers}	
 			/>
 		
 			<DivBallSung
-				index={displayedNumberIndex !== null ? displayedNumberIndex : ""}
+				actualNumber={actualNumber}
 				
 			/>
-			<WinnerModal game="bingo" show={gameStopped && showWinnerModal} />
+			<WinnerModal game="bingo" show={showModal} />
 		</main>
 	);
 };

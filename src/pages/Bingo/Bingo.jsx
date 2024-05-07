@@ -10,48 +10,30 @@ const Bingo = () => {
 	const [state, dispatch] = useReducer(bingoReducer, INITIAL_STATE);
 
 	const {
-		bingoNumbersCardBoard,
-		displayedNumberIndex,
-		intervalId,
-		showWinnerModal,
-		buttonsState,
-		gameStopped,
-		calledNumber,
-		lineSung,
-		lineWins,
-		synthesis,
-		selectedBingoNumbers,
-		sungNumbers,
-		isPaused,
-		selectedIndexs,
+		paused,
+		ourRandomNumbers,
+		allNumbers,
+		actualNumber,
+		showModal,
+		selectedNumbers
 	} = state;
 
 	const { theme } = useContext(ThemeContext);
-	const {play} = buttonsState
-
 
 	return (
 		<div
 			className={`App color-${theme} flex-container bingo-container animated slideInLeft`}
 		>
-			<ThemeSwitcher play={play} />
+			<ThemeSwitcher paused={paused} />
 			<MainBingo
 				theme={theme}
 				dispatch={dispatch}
-				bingoNumbersCardBoard={bingoNumbersCardBoard}
-				displayedNumberIndex={displayedNumberIndex}
-				intervalId={intervalId}
-				showWinnerModal={showWinnerModal}
-				buttonsState={buttonsState}
-				gameStopped={gameStopped}
-				calledNumber={calledNumber}
-				lineSung={lineSung}
-				lineWins={lineWins}
-				synthesis={synthesis}
-				selectedBingoNumbers={selectedBingoNumbers}
-				sungNumbers={sungNumbers}
-				isPaused={isPaused}
-				selectedIndexs={selectedIndexs}
+				paused={paused}
+		        ourRandomNumbers={ourRandomNumbers}
+		        allNumbers={allNumbers}
+		        actualNumber={actualNumber}
+		        showModal={showModal}
+				selectedNumbers={selectedNumbers}
 			/>
 			<GoBack to={"/"} />
 		</div>

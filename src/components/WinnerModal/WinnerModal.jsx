@@ -42,6 +42,16 @@ const WinnerModal = ({ winner, dispatch, game, show }) => {
     })
   : null
 }
+{(show === "info" && game === "bingo")
+  ? checkSwal({
+      title: "Reglas",
+      text: `Cada cantado de bola se hace cada 4s, por lo que has de ser rápido clicando los números, en caso de que se cante la 
+	  siguiente bola, no te dejará hacer click y tendrás que darle a Stop para empezar otra vez.  Mucha suerte y tranquilo que se
+	  puede hacer!!`,
+      imgUrl: "/assets/infoLogo.jpg",
+    })
+  : null
+}
 
 		</>
           
