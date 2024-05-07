@@ -9,7 +9,8 @@ const ThemeSwitcher = ({paused = 0}) => {
                 className="theme-button"
                 src={theme === "dark" ? "/assets/sun.png" : "/assets/moon2.png"}
                 alt="theme"
-                onClick={paused === 0 && toggleTheme}
+                style={{ pointerEvents: paused !== 0 ? "none" : "auto" }}
+                onClick={toggleTheme}
             />
         
 	)

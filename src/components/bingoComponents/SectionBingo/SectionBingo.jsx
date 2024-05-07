@@ -11,12 +11,10 @@ const SectionBingo = ({ theme, dispatch, ourRandomNumbers, actualNumber, selecte
           key={index}
           onClick={() => {
             if (bingoNumber.id === actualNumber) {
-              
               toggleNumberSelection(dispatch, index, selectedNumbers);
             }
     }}      
           className={`number-wrp ${ selectedNumbers[index] && "changeGrey"  }`}
-
         >
           <img
             src={bingoNumber.img}

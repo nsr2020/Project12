@@ -2,8 +2,6 @@ import "./DivBallSung.css";
 import bingoNumbers from "../../../utils/DataBingo/dataBingo";
 
 const DivBallSung = ({ actualNumber }) => {
-  console.log(actualNumber);
-  
   return (
     <div className="divBallSung flex-container">
        {actualNumber !== null ? ( 

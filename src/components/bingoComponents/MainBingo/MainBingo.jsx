@@ -12,8 +12,6 @@ const MainBingo = ({ theme, dispatch,paused,ourRandomNumbers,allNumbers,actualNu
 	useEffect(()=>{
 		handleStopClick(dispatch)
 	},[])
-
- 
 	return (
 		<main className={`color-${theme} flex-container board-bingo`}>
 			<h1 className={`color-${theme}`}>Bingo</h1>
