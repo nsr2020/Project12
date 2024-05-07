@@ -35,7 +35,7 @@ const Bingo = () => {
 		        showModal={showModal}
 				selectedNumbers={selectedNumbers}
 			/>
-			<GoBack to={"/"} />
+			<GoBack to={paused === 0 && "/"} />
 		</div>
 	);
 };
