@@ -1,21 +1,23 @@
-import bingoNumbers from "../../../utils/DataBingo/dataBingo";
-import "./DivBallSung.css"
+import { useEffect } from "react";
+import "./DivBallSung.css";
 
-const DivBallSung = ({index}) => {
-  console.log(index);
-    const isValidIndex = index !== null && index >= 0 && index < bingoNumbers.length;
-    return (
-        <div className={`divBallSung flex-container `}>
-            {isValidIndex && bingoNumbers[index] && bingoNumbers[index].img && (
-        <>
-          <img src={bingoNumbers[index].img} alt={`Número ${index + 1}`} />
-        </>
-      )}
-        {!isValidIndex || !bingoNumbers[index]?.img && (
+const DivBallSung = ({ sungNumbers }) => {
+
+  useEffect(() => {
+    let synthesis = window.speechSynthesis;
+    const numberToSing = new SpeechSynthesisUtterance(sungNumbers.at(-1)?.id);
+    synthesis.speak(numberToSing);
+  }, [sungNumbers]);
+
+  return (
+    <div className={`divBallSung flex-container `}>
+      {sungNumbers.length > 0 ? (
+        <img src={sungNumbers.at(-1).img} alt={sungNumbers.at(-1).id} />
+      ) : (
         <img src="/assets/bingobombo.png" alt="bingoBombo" />
       )}
-        </div>
-      );
-}
+    </div>
+  );
+};
 
-export default DivBallSung
+export default DivBallSung;

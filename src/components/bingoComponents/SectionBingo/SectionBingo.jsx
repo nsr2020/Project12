@@ -1,42 +1,27 @@
-
+import { selectNumber } from "../../../reducer/Bingo/bingo.action";
 import "./SectionBingo.css";
-import { toggleNumberSelection, updateSelectedIndexs } from "../../../reducer/Bingo/bingo.action";
 
-const SectionBingo = ({ theme, bingoNumbersCardBoard, calledNumber,
-  buttonsState, lineSung, lineWins, dispatch, matchingNumbers, intervalId, selectedIndexs }) => {
-  const { play } = buttonsState;
-
-  const handleClick = (index, id) => {
-    if (!play && id === calledNumber) {
-      updateSelectedIndexs(index, selectedIndexs, dispatch);
-      toggleNumberSelection(dispatch, bingoNumbersCardBoard, lineSung, lineWins, index, id, intervalId, matchingNumbers);
-    }
-  };
-  console.log(selectedIndexs);
-
+const SectionBingo = ({ theme, bingoCard, sungNumbers, dispatch }) => {
   return (
     <section className={`game-bingo color-${theme}`}>
-      {bingoNumbersCardBoard.map((bingoNumber, index) => (
+      {bingoCard.map((bingoNumber, index) => (
         <div
           key={index}
           onClick={() => {
-            handleClick(index, bingoNumber.id);
-    }}
-            
-          className={`number-wrp ${(selectedIndexs.includes(index) || bingoNumber.selectedCardBoardBall) && "changeGrey"  }`}
-
+            sungNumbers.find((number) => number.id === bingoNumber?.id) &&
+              selectNumber(dispatch, index, bingoCard);
+          }}
+          className={`number-wrp`}
         >
-          <img
-            src={bingoNumber.img}
-            alt={`Número ${bingoNumber.id}`}
-          />
+          {bingoNumber ? (
+            <img src={bingoNumber.img} alt={`Número ${bingoNumber.id}`} />
+          ) : (
+            <img src="https://static.wixstatic.com/media/f1f438_4521bbb521ad46bfa221288397ae3788~mv2.jpg/v1/fill/w_480,h_336,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/f1f438_4521bbb521ad46bfa221288397ae3788~mv2.jpg" />
+          )}
         </div>
       ))}
     </section>
   );
-}
+};
 
 export default SectionBingo;
-
-
-
