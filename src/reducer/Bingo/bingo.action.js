@@ -2,25 +2,21 @@ import confetti from "canvas-confetti";
 import { getRandomNumbers } from "../../utils/FuntionsBingo/getRandomNumbersForCardBoard";
 import { sayNumber } from "../../utils/FuntionsBingo/sayNumber";
 
-
 let interval = null
 let synthesis = window.speechSynthesis;
 let lineSung= false
 let lineWins= [0, 0, 0]
 
-export const handleStopClick = (dispatch) => {
+export const handleResetClick = (dispatch) => {
   clearInterval(interval);
   lineSung = false;
   lineWins = [0, 0, 0];
- handleNewCardGame(dispatch)
- dispatch({type:"STOP"})
+  const randomIndexes = getRandomNumbers(); 
+  const newBingoCardBoard2 = randomIndexes.map(({ id, img }) => ({ id, img }));
+  dispatch({ type: "NEW_NUMBERS", payload: { newBingoCardBoard2 } });
+  dispatch({type:"RESET"})
  
 };
-/*-------------------------------------------------------------------------------------------------------------------- */
-
-
-//************************************************************************************************ */
-
 export const handlePlayClick = (dispatch,allNumbers, paused) => {
           if(paused ===0) {
             dispatch({type:"PLAY"})
@@ -44,19 +40,13 @@ export const handlePlayClick = (dispatch,allNumbers, paused) => {
           dispatch({type:"NOT_ALL_NUMBERS_SELECTED"})
         }
 	     }, 4000);
-      
-
 };
 
-//----------------------------------------------------------------
-
-//-------------------------------------------------
 export const handlePauseClick = (dispatch) => {
   dispatch({ type: "PAUSE" });
   clearInterval(interval);
 
 };
-//----------------------------------------------------------------
 
 export const toggleNumberSelection = (dispatch, index, selectedNumbers) => {
   const updatedSelectedNumbers = [...selectedNumbers];
@@ -68,15 +58,9 @@ export const toggleNumberSelection = (dispatch, index, selectedNumbers) => {
 	checkLineWinner(dispatch, index);
 
   checkBingoWinner(dispatch);
-  
-	
-	
 };
 
-//----------------------------------------------------------------
-
-export const checkLineWinner = (
-	dispatch,
+export const checkLineWinner = (	dispatch,
 	index,
   
 ) => {
@@ -109,7 +93,6 @@ export const checkLineWinner = (
   },1000)
 };
 
-
 export const checkBingoWinner = (dispatch) => {
   let lineWinsSum = lineWins[0] + lineWins[1] + lineWins[2]
  
@@ -119,28 +102,15 @@ export const checkBingoWinner = (dispatch) => {
     });
     confetti();
     setTimeout(() => {
-      handleStopClick(dispatch);
+      handleResetClick(dispatch);
     }, 500);
   }
 };
-
-
-//----------------------------------------------------------------
-
-export const handleNewCardGame = (dispatch) => {
-  const randomIndexes = getRandomNumbers(); 
-  const newBingoCardBoard2 = randomIndexes.map(({ id, img }) => ({ id, img }));
-  dispatch({ type: "NEW_NUMBERS", payload: { newBingoCardBoard2 } });
-};
-
-
-/*----------------------------------------- */
 export const handleInfoGame = (dispatch) =>{
   dispatch({type:"INFO_GAME"})
   setTimeout(()=>{
     dispatch({type:"CLEAN_MODAL"})
   },200)
-
 }
 
 

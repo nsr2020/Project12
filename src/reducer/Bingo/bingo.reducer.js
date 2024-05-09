@@ -13,7 +13,7 @@ export const INITIAL_STATE = {
 
 export const bingoReducer = (state = INITIAL_STATE, action={}) => {
     switch(action.type) {
-        case "STOP":
+        case "RESET":
             return {
                 paused: 0,
                 ourRandomNumbers: [...getRandomNumbers()],
@@ -27,7 +27,7 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
         
             return {
                 ...state,
-                paused:2
+                paused:0
                        };
     
         case "PLAY":
@@ -37,11 +37,6 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                 paused:1
               
             };
-            case "RESUME" : 
-            return {
-                ...state,
-                paused:3
-            }
             case "UPDATE_SUNG_NUMBER":
                 const {actualNumber} = action.payload
             return {
@@ -81,7 +76,7 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
                 case"NOT_ALL_NUMBERS_SELECTED":
                 return{
                     ...state,
-                    paused:4
+                    paused:2
                 }
                 case"UPDATE_SELECTED_NUMBERS":
                 const {selectedNumbers} = action.payload

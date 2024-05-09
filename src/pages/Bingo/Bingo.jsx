@@ -8,7 +8,6 @@ import { bingoReducer, INITIAL_STATE } from "../../reducer/Bingo/bingo.reducer";
 
 const Bingo = () => {
 	const [state, dispatch] = useReducer(bingoReducer, INITIAL_STATE);
-
 	const {
 		paused,
 		ourRandomNumbers,
@@ -17,7 +16,6 @@ const Bingo = () => {
 		showModal,
 		selectedNumbers
 	} = state;
-
 	const { theme } = useContext(ThemeContext);
 
 	return (
@@ -29,10 +27,10 @@ const Bingo = () => {
 				theme={theme}
 				dispatch={dispatch}
 				paused={paused}
-		        ourRandomNumbers={ourRandomNumbers}
-		        allNumbers={allNumbers}
-		        actualNumber={actualNumber}
-		        showModal={showModal}
+				ourRandomNumbers={ourRandomNumbers}
+				allNumbers={allNumbers}
+				actualNumber={actualNumber}
+				showModal={showModal}
 				selectedNumbers={selectedNumbers}
 			/>
 			<GoBack to={paused === 0 && "/"} />
