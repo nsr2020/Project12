@@ -16,6 +16,7 @@ const Bingo = () => {
 		showModal,
 		selectedNumbers
 	} = state;
+	
 	const { theme } = useContext(ThemeContext);
 
 	return (

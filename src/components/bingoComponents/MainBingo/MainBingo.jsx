@@ -1,4 +1,3 @@
-
 import Button from "../../Button/Button";
 import DivBallSung from "../DivBallSung/DivBallSung";
 import SectionBingo from "../SectionBingo/SectionBingo";
@@ -16,27 +15,25 @@ const MainBingo = ({ theme,dispatch,paused, ourRandomNumbers, allNumbers, actual
 				<Button
 					theme={theme}
 					text="▶"
-					game="bingo"
+					title="Play"
 					onClick={()=>{
 						handlePlayClick(dispatch,allNumbers,paused)
 					}}
-					title="Play"
 					disabled={paused !== 0}
 				/>
 				<Button
 					theme={theme}
 					text="⏸"
-					game="bingo"
+					title="Pause"
 					onClick={()=>{
 						handlePauseClick(dispatch)
 					}}
-					title="Pause"
 					disabled={paused === 0 || paused === 2 }
 				/>
 				<Button
 					theme={theme}
 					text="🎲"
-					game="bingo"
+					
 					onClick={()=>{
 						handleResetClick(dispatch)
 					}}
@@ -45,11 +42,10 @@ const MainBingo = ({ theme,dispatch,paused, ourRandomNumbers, allNumbers, actual
 					<Button
 					theme={theme}
 					text="ℹ"
-					game="bingo"
+					title="Info about this game"
 					onClick={()=>{
 						handleInfoGame(dispatch)
 					}}
-					title="Info about this game"
 					disabled={paused !== 0 || paused === 2 }
 				/>
 			</div>
