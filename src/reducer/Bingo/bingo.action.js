@@ -21,7 +21,7 @@ export const handlePlayClick = (dispatch,allNumbers, paused) => {
           if(paused ===0) {
             dispatch({type:"PLAY"})
           }else{
-            dispatch({type:"RESUME"})
+            dispatch({type:"PAUSE"})
           }
         let updatedBingoNumbers = [...allNumbers];
         interval = setInterval(() => {
@@ -65,15 +65,15 @@ export const checkLineWinner = (	dispatch,
   
 ) => {
 		if (index >= 0 && index <= 4) {
-			lineWins[0] += 1; // Incrementa el contador de la primera línea
+			lineWins[0] += 1; 
 			
 		} 
 		if (index >= 5 && index <= 9) {
-			lineWins[1] += 1; // Incrementa el contador de la segunda línea
+			lineWins[1] += 1; 
 			
 		} 
 		if (index >= 10 && index <= 14) {
-			lineWins[2] += 1; // Incrementa el contador de la tercera línea
+			lineWins[2] += 1;
 			
 		} 
 		if (lineWins.some((count) => count === 5) && lineSung === false) {
@@ -95,7 +95,6 @@ export const checkLineWinner = (	dispatch,
 
 export const checkBingoWinner = (dispatch) => {
   let lineWinsSum = lineWins[0] + lineWins[1] + lineWins[2]
- 
   if (lineWinsSum === 15) {
     dispatch({
       type: "BINGO_WINNER",

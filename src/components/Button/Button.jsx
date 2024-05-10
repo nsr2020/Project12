@@ -1,7 +1,6 @@
 import "./Button.css";
 
 const Button = ({ theme, text, title, onClick ,disabled=false }) => {
-	
   return (
     <>
       <button 

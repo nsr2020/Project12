@@ -24,14 +24,12 @@ export const bingoReducer = (state = INITIAL_STATE, action={}) => {
             };
 
             case "PAUSE":
-        
             return {
                 ...state,
                 paused:0
                        };
     
-        case "PLAY":
-            
+        case "PLAY": 
             return {
                 ...state,
                 paused:1
